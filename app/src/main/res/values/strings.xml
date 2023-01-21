@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">Coin Master</string>
+
+    <string name="creator">©Matin Nasiri</string>
+
+    <string name="more">More</string>
+    <string name="some_error">Some Error</string>
+
+    <string name="period_1h">12H</string>
+    <string name="period_1day">1D</string>
+    <string name="period_1week">1W</string>
+    <string name="period_1month">1M</string>
+    <string name="period_3month">3M</string>
+    <string name="period_1year">1Y</string>
+    <string name="period_all">ALL</string>
+    <string name="statistics">Statistics</string>
+    <string name="connect_to_internet">Connect To Internet!</string>
+
+
+</resources>
