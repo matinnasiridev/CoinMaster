@@ -6,6 +6,8 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import com.adivery.sdk.Adivery
+import ir.groid.coinmaster.apiManager.APP_ID
 import ir.groid.coinmaster.apiManager.model.CoinsAboutItem
 import ir.groid.coinmaster.apiManager.model.CoinsData
 import ir.groid.coinmaster.databinding.ActivityCoinDataBinding
@@ -20,11 +22,16 @@ class CoinDataActivity : AppCompatActivity() {
         binding = ActivityCoinDataBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        Adivery.configure(application, APP_ID)
+
+        Adivery.prepareInterstitialAd(this, APP_ID)
+        if (Adivery.isLoaded(APP_ID)){
+            Adivery.showAd(APP_ID);
+        }
 
         val allData = intent.getBundleExtra("dataOmade")!!
-        dataCoin = allData.getParcelable<CoinsData.Data>("bundle1")!!
-        dataAbout = allData.getParcelable<CoinsAboutItem>("bundle2")!!
-
+        dataCoin = allData.getParcelable("bundle1")!!
+        dataAbout = allData.getParcelable("bundle2")!!
         binding.layoutToolbar.toolbar.title = dataCoin.coinInfo.fullName
         initUi()
 
@@ -37,6 +44,9 @@ class CoinDataActivity : AppCompatActivity() {
     }
 
     private fun initChartUi() {
+
+        binding.layoutChart.txtChartPrice.text = dataCoin.dISPLAY.uSD.pRICE
+
 
 
     }
