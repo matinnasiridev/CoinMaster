@@ -19,6 +19,7 @@
         <item name="android:windowBackground">@color/backgroundColor</item>
         <item name="fontFamily">@font/sans_sarif_med</item>
         <item name="android:navigationBarColor">@color/backgroundColor</item>
+        <item name="spark_SparkViewStyle">@style/MySparkViewStyle</item>
 
     </style>
 
@@ -99,4 +100,11 @@
         <item name="android:textSize">42sp</item>
     </style>
 
+
+    <style name="MySparkViewStyle" parent="@style/spark_SparkView">
+        <item name="spark_lineColor">@color/colorPrimary</item>
+        <item name="spark_lineWidth">3dp</item>
+        <item name="spark_fill">false</item>
+        <item name="spark_baseLineColor">@color/colorPrimary</item>
+    </style>
 </resources>

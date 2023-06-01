@@ -5,7 +5,19 @@ import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
+import androidx.core.content.ContextCompat
+import ir.groid.coinmaster.adapter.ChartAdapter
+import ir.groid.coinmaster.apiManager.ALL
+import ir.groid.coinmaster.apiManager.ApiManager
+import ir.groid.coinmaster.apiManager.HOUR
+import ir.groid.coinmaster.apiManager.HOURS24
+import ir.groid.coinmaster.apiManager.MONTH
+import ir.groid.coinmaster.apiManager.MONTH3
+import ir.groid.coinmaster.apiManager.WEEK
+import ir.groid.coinmaster.apiManager.YEAR
+import ir.groid.coinmaster.apiManager.model.ChartData
 import ir.groid.coinmaster.apiManager.model.CoinsAboutItem
 import ir.groid.coinmaster.apiManager.model.CoinsData
 import ir.groid.coinmaster.databinding.ActivityCoinDataBinding
@@ -15,6 +27,7 @@ class CoinDataActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCoinDataBinding
     private lateinit var dataCoin: CoinsData.Data
     private lateinit var dataAbout: CoinsAboutItem
+    private val apiManager = ApiManager()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityCoinDataBinding.inflate(layoutInflater)
@@ -37,9 +50,137 @@ class CoinDataActivity : AppCompatActivity() {
     private fun initChartUi() {
 
         binding.layoutChart.txtChartPrice.text = dataCoin.dISPLAY.uSD.pRICE
+        binding.layoutChart.txtChartChanger1.text = " " + dataCoin.dISPLAY.uSD.cHANGEPCT24HOUR + " "
 
 
+        val taghir = dataCoin.rAW.uSD.cHANGEPCT24HOUR
+        if (taghir > 0) {
+            binding.layoutChart.txtChartChange2.text =
+                dataCoin.rAW.uSD.cHANGEPCT24HOUR.toString().substring(0, 4) + "%"
+            binding.layoutChart.txtChartChange2.setTextColor(
+                ContextCompat.getColor(
+                    binding.root.context,
+                    R.color.colorGain
+                )
+            )
+            binding.layoutChart.txtChartUpdown.setTextColor(
+                ContextCompat.getColor(
+                    binding.root.context,
+                    R.color.colorGain
+                )
+            )
+            binding.layoutChart.txtChartUpdown.text = "▲"
+            binding.layoutChart.sparkmain.lineColor = ContextCompat.getColor(
+                binding.root.context,
+                R.color.colorGain
+            )
+        } else if (taghir < 0) {
+            binding.layoutChart.txtChartChange2.text =
+                dataCoin.rAW.uSD.cHANGEPCT24HOUR.toString().substring(0, 4) + "%"
+            binding.layoutChart.txtChartChange2.setTextColor(
+                ContextCompat.getColor(
+                    binding.root.context,
+                    R.color.colorLoss
+                )
+            )
+            binding.layoutChart.txtChartUpdown.setTextColor(
+                ContextCompat.getColor(
+                    binding.root.context,
+                    R.color.colorLoss
+                )
+            )
+            binding.layoutChart.txtChartUpdown.text = "▼"
+            binding.layoutChart.sparkmain.lineColor = ContextCompat.getColor(
+                binding.root.context,
+                R.color.colorLoss
+            )
+        } else {
+            binding.layoutChart.txtChartUpdown.text = "▶"
+            binding.layoutChart.sparkmain.lineColor = ContextCompat.getColor(
+                binding.root.context,
+                R.color.primaryTextColor
+            )
+            binding.layoutChart.txtChartChange2.text = "0%"
+            binding.layoutChart.txtChartUpdown.setTextColor(
+                ContextCompat.getColor(
+                    binding.root.context,
+                    R.color.primaryTextColor
+                )
+            )
+            binding.layoutChart.txtChartChange2.setTextColor(
+                ContextCompat.getColor(
+                    binding.root.context,
+                    R.color.primaryTextColor
+                )
+            )
+        }
+
+        var period: String = HOUR
+        runChart(period)
+
+        binding.layoutChart.radio.setOnCheckedChangeListener { _, checkedId ->
+            when (checkedId) {
+                R.id.radio_12h -> {
+                    period = HOUR
+                }
+
+                R.id.radio_1d -> {
+                    period = HOURS24
+                }
+
+                R.id.radio_1w -> {
+                    period = WEEK
+                }
+
+                R.id.radio_1m -> {
+                    period = MONTH
+                }
+
+                R.id.radio_3m -> {
+                    period = MONTH3
+                }
+
+                R.id.radio_1y -> {
+                    period = YEAR
+                }
+
+                R.id.radio_all -> {
+                    period = ALL
+                }
+            }
+            runChart(period)
+        }
+
+        binding.layoutChart.sparkmain.setScrubListener {
+            if (it == null) {
+                binding.layoutChart.txtChartPrice.text = dataCoin.dISPLAY.uSD.pRICE
+            } else {
+                binding.layoutChart.txtChartPrice.text =
+                    "$" + (it as ChartData.Data).close.toString()
+            }
+        }
     }
+
+    private fun runChart(p: String) {
+        apiManager.getChartData(
+            dataCoin.coinInfo.name,
+            p,
+            object : ApiManager.ApiCallBack<Pair<List<ChartData.Data>, ChartData.Data?>> {
+                override fun onSuccess(data: Pair<List<ChartData.Data>, ChartData.Data?>) {
+
+                    val chartAdapter = ChartAdapter(data.first, data.second?.open.toString())
+                    binding.layoutChart.sparkmain.adapter = chartAdapter
+
+                }
+
+                override fun onError(errorMassage: String) {
+                    Log.v("ChartDate", errorMassage)
+                }
+
+            }
+        )
+    }
+
 
     @SuppressLint("SetTextI18n")
     private fun initStatisticsUi() {

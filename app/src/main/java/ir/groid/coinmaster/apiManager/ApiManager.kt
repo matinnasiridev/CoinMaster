@@ -60,7 +60,78 @@ class ApiManager {
         })
     }
 
-    // Create Api Manager Here.
+    fun getChartData(
+        symbol: String,
+        period: String,
+        apiCallback: ApiCallBack<Pair<List<ChartData.Data>, ChartData.Data?>>
+    ) {
+
+        var histoPeriod = ""
+        var limit = 30
+        var aggregate = 1
+
+        when (period) {
+
+            HOUR -> {
+                histoPeriod = HISTO_MINUTE
+                limit = 60
+                aggregate = 12
+            }
+
+            HOURS24 -> {
+                histoPeriod = HISTO_HOUR
+                limit = 24
+            }
+
+            MONTH -> {
+                histoPeriod = HISTO_DAY
+                limit = 30
+            }
+
+            MONTH3 -> {
+                histoPeriod = HISTO_DAY
+                limit = 90
+            }
+
+            WEEK -> {
+                histoPeriod = HISTO_HOUR
+                aggregate = 6
+            }
+
+            YEAR -> {
+                histoPeriod = HISTO_DAY
+                aggregate = 13
+            }
+
+            ALL -> {
+                histoPeriod = HISTO_DAY
+                aggregate = 30
+                limit = 2000
+            }
+
+        }
+
+        apiService.getChartData(histoPeriod, symbol, limit, aggregate)
+            .enqueue(object : Callback<ChartData> {
+                override fun onResponse(call: Call<ChartData>, response: Response<ChartData>) {
+
+                    val dataFull = response.body()!!
+                    val data1 = dataFull.data
+                    val data2 = dataFull.data.maxByOrNull { it.close.toFloat() }
+                    val returningData = Pair(data1, data2)
+
+                    apiCallback.onSuccess(returningData)
+
+                }
+
+                override fun onFailure(call: Call<ChartData>, t: Throwable) {
+                    apiCallback.onError(t.message!!)
+                }
+
+            })
+
+    }
+
 
     interface ApiCallBack<T> {
         fun onSuccess(data: T)
