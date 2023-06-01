@@ -60,68 +60,8 @@ class ApiManager {
         })
     }
 
-    fun getChartData(
-        period: String,
-        symol: String,
-        apiCallBack: ApiCallBack<ChartData>
-    ) {
-        var histoPer = ""
-        var limit = 30
-        var aggregate = 1
+    // Create Api Manager Here.
 
-        when (period) {
-            HOUR -> {
-                histoPer = HISTO_MINUTE
-                limit = 24
-            }
-            HOURS24 -> {
-                histoPer = HISTO_HOUR
-                limit = 60
-                aggregate = 12
-            }
-            WEEK -> {
-                histoPer = HISTO_HOUR
-                aggregate = 6
-
-            }
-            MONTH -> {
-                histoPer = HISTO_DAY
-                limit = 30
-            }
-            MONTH3 -> {
-                histoPer = HISTO_DAY
-                limit = 90
-
-            }
-            YEAR -> {
-                histoPer = HISTO_DAY
-                aggregate = 13
-
-            }
-            ALL -> {
-                histoPer = HISTO_DAY
-                limit = 2000
-                aggregate = 30
-
-            }
-        }
-
-        apiService.getChartData(
-            histoPer,
-            symol,
-            limit,
-            aggregate
-        ).enqueue(object : Callback<ChartData> {
-            override fun onResponse(call: Call<ChartData>, response: Response<ChartData>) {
-                apiCallBack.onSuccess(response.body()!!)
-            }
-
-            override fun onFailure(call: Call<ChartData>, t: Throwable) {
-                apiCallBack.onError(t.message!!)
-            }
-
-        })
-    }
     interface ApiCallBack<T> {
         fun onSuccess(data: T)
         fun onError(errorMassage: String)

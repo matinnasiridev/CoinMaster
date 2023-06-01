@@ -26,19 +26,17 @@ class CoinDataActivity : AppCompatActivity() {
         dataAbout = allData.getParcelable("bundle2")!!
         binding.layoutToolbar.toolbar.title = dataCoin.coinInfo.fullName
         initUi()
-
     }
 
     private fun initUi() {
         initChartUi()
         initStatisticsUi()
-
+        initAboutUi()
     }
 
     private fun initChartUi() {
 
         binding.layoutChart.txtChartPrice.text = dataCoin.dISPLAY.uSD.pRICE
-
 
 
     }
@@ -106,7 +104,7 @@ class CoinDataActivity : AppCompatActivity() {
         }
 
         if (dataAbout.coinDes == "") {
-            layout.txtAboutCoin.text = "No Data!"
+            layout.txtAboutCoin.text = "There is no explanation!"
         } else {
             layout.txtAboutCoin.text = dataAbout.coinDes
         }

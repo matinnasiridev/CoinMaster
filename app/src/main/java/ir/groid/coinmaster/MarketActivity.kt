@@ -170,16 +170,9 @@ class MarketActivity : AppCompatActivity(), MarketAdapter.RecCallBack {
     // Start Activity CoinDetails And Set Coin Data
     override fun onToch(data: CoinsData.Data) {
         val intent = Intent(this, CoinDataActivity::class.java)
-
         val bundle = Bundle()
         bundle.putParcelable("bundle1", data)
-        try {
-            bundle.putParcelable("bundle2", aboutDataMap[data.coinInfo.name]!!)
-        } catch (ex: Exception) {
-            Toast.makeText(this, "Data About", Toast.LENGTH_SHORT).show()
-        }
-
-
+        bundle.putParcelable("bundle2", aboutDataMap[data.coinInfo.name] ?: CoinsAboutItem())
         intent.putExtra("dataOmade", bundle)
         startActivity(intent)
     }
