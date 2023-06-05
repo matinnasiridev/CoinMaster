@@ -1,4 +1,4 @@
-package ir.groid.coinmaster.apiManager
+package ir.groid.coinmaster.model
 
 
 const val ERROR_HANDELER = "HelloDady"

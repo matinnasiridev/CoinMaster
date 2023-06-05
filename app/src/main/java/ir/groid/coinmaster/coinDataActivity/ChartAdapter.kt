@@ -1,7 +1,7 @@
-package ir.groid.coinmaster.adapter
+package ir.groid.coinmaster.coinDataActivity
 
 import com.robinhood.spark.SparkAdapter
-import ir.groid.coinmaster.apiManager.model.ChartData
+import ir.groid.coinmaster.model.model.ChartData
 
 class ChartAdapter(
     private val historyData: List<ChartData.Data>,

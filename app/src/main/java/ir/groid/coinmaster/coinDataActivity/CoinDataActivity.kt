@@ -1,4 +1,4 @@
-package ir.groid.coinmaster
+package ir.groid.coinmaster.coinDataActivity
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -6,33 +6,26 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.core.content.ContextCompat
-import ir.groid.coinmaster.adapter.ChartAdapter
-import ir.groid.coinmaster.apiManager.ALL
-import ir.groid.coinmaster.apiManager.ApiManager
-import ir.groid.coinmaster.apiManager.HOUR
-import ir.groid.coinmaster.apiManager.HOURS24
-import ir.groid.coinmaster.apiManager.MONTH
-import ir.groid.coinmaster.apiManager.MONTH3
-import ir.groid.coinmaster.apiManager.WEEK
-import ir.groid.coinmaster.apiManager.YEAR
-import ir.groid.coinmaster.apiManager.model.ChartData
-import ir.groid.coinmaster.apiManager.model.CoinsAboutItem
-import ir.groid.coinmaster.apiManager.model.CoinsData
+import ir.groid.coinmaster.R
+import ir.groid.coinmaster.model.*
+import ir.groid.coinmaster.model.model.*
 import ir.groid.coinmaster.databinding.ActivityCoinDataBinding
 
-class CoinDataActivity : AppCompatActivity() {
+class CoinDataActivity : AppCompatActivity(), CoinContract.View {
 
     private lateinit var binding: ActivityCoinDataBinding
     private lateinit var dataCoin: CoinsData.Data
     private lateinit var dataAbout: CoinsAboutItem
     private val apiManager = ApiManager()
+    private val mPresenter: CoinContract.Presenter = CoinPresenter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityCoinDataBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+
+        mPresenter.onAttach(this)
 
         val allData = intent.getBundleExtra("dataOmade")!!
         dataCoin = allData.getParcelable("bundle1")!!
@@ -274,10 +267,14 @@ class CoinDataActivity : AppCompatActivity() {
     }
 
     private fun openOnWeb(url: String) {
-        if (url.isEmpty()) {
-            Toast.makeText(this, "Link Is Empty", Toast.LENGTH_SHORT).show()
-        } else {
+        if (url.isNotEmpty()) {
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
         }
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mPresenter.onDetach()
+    }
+
 }

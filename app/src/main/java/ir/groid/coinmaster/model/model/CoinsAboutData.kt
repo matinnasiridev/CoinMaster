@@ -1,4 +1,4 @@
-package ir.groid.coinmaster.apiManager.model
+package ir.groid.coinmaster.model.model
 
 
 import com.google.gson.annotations.SerializedName

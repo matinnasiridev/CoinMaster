@@ -1,4 +1,4 @@
-package ir.groid.coinmaster.adapter
+package ir.groid.coinmaster.marketActivity
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
@@ -7,13 +7,16 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import ir.groid.coinmaster.apiManager.BASE_URL_IMAG
+import ir.groid.coinmaster.model.BASE_URL_IMAG
 import ir.groid.coinmaster.R
-import ir.groid.coinmaster.apiManager.model.CoinsData
+import ir.groid.coinmaster.model.model.CoinsData
 import ir.groid.coinmaster.databinding.ItemMarketSmallBinding
 
 
-class MarketAdapter(private val data: List<CoinsData.Data>, private val apiCallback: RecCallBack) :
+class MarketAdapter(
+    private val data: List<CoinsData.Data>,
+    private val apiCallback: RecCallBack
+) :
     RecyclerView.Adapter<MarketAdapter.MarketViewHolder>() {
     private lateinit var binding: ItemMarketSmallBinding
 
@@ -61,7 +64,7 @@ class MarketAdapter(private val data: List<CoinsData.Data>, private val apiCallb
 
 
             itemView.setOnClickListener {
-                apiCallback.onToch(data)
+                apiCallback.onTouch(data)
             }
         }
 
@@ -79,7 +82,7 @@ class MarketAdapter(private val data: List<CoinsData.Data>, private val apiCallb
     override fun getItemCount(): Int = data.size
 
     interface RecCallBack {
-        fun onToch(data: CoinsData.Data)
+        fun onTouch(data: CoinsData.Data)
     }
 
 }
