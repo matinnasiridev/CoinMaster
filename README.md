@@ -27,8 +27,7 @@
 ---
 <br>
 
-![Preview](assets/0.jpg)
+![Preview](asset/0.jpg)
 
-<br>
-<br>
-Designed with 💜 in Iran   [Matin Nasiri](https://www.instagram.com/matin.m.nasiri)
+<br> 
+<br> 
