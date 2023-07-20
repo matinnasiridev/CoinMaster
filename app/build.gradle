@@ -2,21 +2,22 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-parcelize'
+    id 'kotlin-kapt'
 
 }
 
 android {
     namespace 'ir.groid.coinmaster'
-    compileSdk 32
+    compileSdk 33
 
-    buildFeatures{
+    buildFeatures {
         viewBinding true
     }
 
     defaultConfig {
         applicationId "ir.groid.coinmaster"
         minSdk 21
-        targetSdk 32
+        targetSdk 33
         versionCode 1
         versionName "1.0"
 
@@ -51,9 +52,10 @@ dependencies {
     // Chart
     implementation 'com.robinhood.spark:spark:1.2.0'
 
-    // Server
+    // Retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.9.0'
 
     // Swiper
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
@@ -62,4 +64,14 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.14.2'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.14.2'
 
+    // RxJava
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.10'
+
+    // Room
+    implementation("androidx.room:room-runtime:2.5.2")
+    kapt("androidx.room:room-compiler:2.5.2")
+
+    // Koin
+    // implementation "io.insert-koin:koin-android:3.2.0-beta-1"
 }
