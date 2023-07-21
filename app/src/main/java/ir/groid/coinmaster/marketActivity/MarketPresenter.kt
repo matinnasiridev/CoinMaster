@@ -5,9 +5,9 @@ import android.util.Log
 import com.google.gson.Gson
 import ir.groid.coinmaster.model.ApiManager
 import ir.groid.coinmaster.model.ERROR_HANDELER
-import ir.groid.coinmaster.model.model.CoinsAboutData
-import ir.groid.coinmaster.model.model.CoinsAboutItem
-import ir.groid.coinmaster.model.model.CoinsData
+import ir.groid.coinmaster.model.CoinsAboutData
+import ir.groid.coinmaster.model.CoinsAboutItem
+import ir.groid.coinmaster.model.CoinsData
 
 class MarketPresenter :
     MarketContract.Presenter {

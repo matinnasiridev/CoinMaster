@@ -1,9 +1,9 @@
 package ir.groid.coinmaster.model
 
 
-import ir.groid.coinmaster.model.model.ChartData
-import ir.groid.coinmaster.model.model.CoinsData
-import ir.groid.coinmaster.model.model.NewsData
+import ir.groid.coinmaster.model.ChartData
+import ir.groid.coinmaster.model.CoinsData
+import ir.groid.coinmaster.model.NewsData
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Headers

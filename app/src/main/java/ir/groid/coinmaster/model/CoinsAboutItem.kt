@@ -1,4 +1,4 @@
-package ir.groid.coinmaster.model.model
+package ir.groid.coinmaster.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

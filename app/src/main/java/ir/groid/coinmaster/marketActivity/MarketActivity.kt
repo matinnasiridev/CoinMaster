@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import ir.groid.coinmaster.coinDataActivity.CoinDataActivity
 import ir.groid.coinmaster.model.model.*
 import ir.groid.coinmaster.databinding.ActivityMarketBinding
+import ir.groid.coinmaster.model.CoinsAboutItem
+import ir.groid.coinmaster.model.CoinsData
 
 class MarketActivity : AppCompatActivity(), MarketContract.View, MarketAdapter.RecCallBack {
 

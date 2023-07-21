@@ -1,8 +1,8 @@
 package ir.groid.coinmaster.marketActivity
 
 import android.content.Context
-import ir.groid.coinmaster.model.model.CoinsAboutItem
-import ir.groid.coinmaster.model.model.CoinsData
+import ir.groid.coinmaster.model.CoinsAboutItem
+import ir.groid.coinmaster.model.CoinsData
 
 
 interface MarketContract {

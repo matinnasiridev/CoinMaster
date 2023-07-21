@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import ir.groid.coinmaster.model.BASE_URL_IMAG
 import ir.groid.coinmaster.R
-import ir.groid.coinmaster.model.model.CoinsData
+import ir.groid.coinmaster.model.CoinsData
 import ir.groid.coinmaster.databinding.ItemMarketSmallBinding
 
 
