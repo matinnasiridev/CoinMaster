@@ -1,22 +1,26 @@
-package ir.groid.coinmaster.module
+package ir.groid.coinmaster.di
 
 import android.content.Context
 import androidx.room.Room
 import ir.groid.coinmaster.database.AppDatabase
 import ir.groid.coinmaster.database.CoinDao
-import ir.groid.coinmaster.responce.RCoinData
+import ir.groid.coinmaster.database.NewsDao
+import ir.groid.coinmaster.model.RCoinData
+import ir.groid.coinmaster.model.RNewsData
 import ir.groid.coinmaster.util.Constans.DatabaseName
 import org.koin.dsl.module
 
 object DatabaseM {
     val DatabaseM = module {
 
-        single { provideDatabse(get()) }
+        single { provideDatabase(get()) }
         single { provideCoinDao(get()) }
+        single { provideNewsDao(get()) }
         factory { provideRCoinData() }
+        factory { provideRNewsData() }
     }
 
-    private fun provideDatabse(c: Context): AppDatabase {
+    private fun provideDatabase(c: Context): AppDatabase {
         return Room.databaseBuilder(
             c,
             AppDatabase::class.java,
@@ -27,5 +31,10 @@ object DatabaseM {
     private fun provideCoinDao(db: AppDatabase): CoinDao = db.coinDao
 
 
+    private fun provideNewsDao(db: AppDatabase): NewsDao = db.newsDao
+
+
     private fun provideRCoinData(): RCoinData = RCoinData()
+
+    private fun provideRNewsData(): RNewsData = RNewsData()
 }

@@ -1,4 +1,4 @@
-package ir.groid.coinmaster.coinDataActivity
+package ir.groid.coinmaster.ui
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -8,17 +8,29 @@ import android.os.Bundle
 import android.util.Log
 import androidx.core.content.ContextCompat
 import ir.groid.coinmaster.R
-import ir.groid.coinmaster.model.*
-import ir.groid.coinmaster.model.model.*
+import ir.groid.coinmaster.adapter.ChartAdapter
+import ir.groid.coinmaster.api.ApiManager
+import ir.groid.coinmaster.coinDataActivity.CoinContract
+import ir.groid.coinmaster.coinDataActivity.CoinPresenter
+import ir.groid.coinmaster.responce.*
 import ir.groid.coinmaster.databinding.ActivityCoinDataBinding
+import ir.groid.coinmaster.util.ApiCallBack
+import ir.groid.coinmaster.util.Constans.ALL
+import ir.groid.coinmaster.util.Constans.HOUR
+import ir.groid.coinmaster.util.Constans.HOURS24
+import ir.groid.coinmaster.util.Constans.MONTH
+import ir.groid.coinmaster.util.Constans.MONTH3
+import ir.groid.coinmaster.util.Constans.WEEK
+import ir.groid.coinmaster.util.Constans.YEAR
 
 class CoinDataActivity : AppCompatActivity(), CoinContract.View {
 
     private lateinit var binding: ActivityCoinDataBinding
     private lateinit var dataCoin: CoinsData.Data
     private lateinit var dataAbout: CoinsAboutItem
-    private val apiManager = ApiManager()
+
     private val mPresenter: CoinContract.Presenter = CoinPresenter()
+    private lateinit var apiManager: ApiManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityCoinDataBinding.inflate(layoutInflater)
@@ -158,7 +170,7 @@ class CoinDataActivity : AppCompatActivity(), CoinContract.View {
         apiManager.getChartData(
             dataCoin.coinInfo.name,
             p,
-            object : ApiManager.ApiCallBack<Pair<List<ChartData.Data>, ChartData.Data?>> {
+            object : ApiCallBack<Pair<List<ChartData.Data>, ChartData.Data?>> {
                 override fun onSuccess(data: Pair<List<ChartData.Data>, ChartData.Data?>) {
 
                     val chartAdapter = ChartAdapter(data.first, data.second?.open.toString())
@@ -166,8 +178,8 @@ class CoinDataActivity : AppCompatActivity(), CoinContract.View {
 
                 }
 
-                override fun onError(errorMassage: String) {
-                    Log.v("ChartDate", errorMassage)
+                override fun onError(em: String) {
+                    Log.v("ChartDate", em)
                 }
 
             }

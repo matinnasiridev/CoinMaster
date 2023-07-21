@@ -1,11 +1,11 @@
-package ir.groid.coinmaster.module
+package ir.groid.coinmaster.di
 
-import ir.groid.coinmaster.viewModels.MainViewModel
+import ir.groid.coinmaster.viewModels.MarketVM
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 object ViewModelM {
     val ViewModelM = module {
-        viewModel { MainViewModel(get()) }
+        viewModel { MarketVM(get()) }
     }
 }

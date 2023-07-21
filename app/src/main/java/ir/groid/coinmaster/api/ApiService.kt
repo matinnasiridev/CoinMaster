@@ -1,10 +1,11 @@
-package ir.groid.coinmaster.model
+package ir.groid.coinmaster.api
 
 
-import ir.groid.coinmaster.model.ChartData
-import ir.groid.coinmaster.model.CoinsData
-import ir.groid.coinmaster.model.NewsData
-import retrofit2.Call
+import io.reactivex.Single
+import ir.groid.coinmaster.responce.ChartData
+import ir.groid.coinmaster.responce.CoinsData
+import ir.groid.coinmaster.responce.NewsData
+import ir.groid.coinmaster.util.Constans.API_KEYS
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.Path
@@ -16,14 +17,14 @@ interface ApiService {
     @GET("v2/news/")
     fun getTopNews(
         @Query("sortOrder") sortOrder: String = "popular"
-    ): Call<NewsData>
+    ): Single<NewsData>
 
 
     @Headers(API_KEYS)
     @GET("top/totalvolfull")
     fun getTopCoins(
         @Query("tsym") ts_ym: String = "USD"
-    ): Call<CoinsData>
+    ): Single<CoinsData>
 
 
     @Headers(API_KEYS)
@@ -34,7 +35,7 @@ interface ApiService {
         @Query("limit") limit: Int,
         @Query("aggregate") aggregate: Int,
         @Query("tsym") toSymbol: String = "USD"
-    ):Call<ChartData>
+    ): Single<ChartData>
 
 
 }

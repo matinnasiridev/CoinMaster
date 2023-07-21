@@ -5,7 +5,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import ir.groid.coinmaster.responce.RCoinData
+import ir.groid.coinmaster.model.RCoinData
 import ir.groid.coinmaster.util.Constans.TableCoin
 
 @Dao

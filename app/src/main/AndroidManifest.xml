@@ -17,14 +17,14 @@
         android:theme="@style/Theme.CoinMaster"
         tools:targetApi="31">
         <activity
-            android:name=".coinDataActivity.CoinDataActivity"
+            android:name=".ui.CoinDataActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".marketActivity.MarketActivity"
+            android:name=".ui.MarketActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

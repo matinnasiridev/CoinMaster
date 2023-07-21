@@ -1,4 +1,4 @@
-package ir.groid.coinmaster.marketActivity
+package ir.groid.coinmaster.ui
 
 import android.content.Intent
 import android.net.Uri
@@ -6,14 +6,17 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import androidx.recyclerview.widget.LinearLayoutManager
-import ir.groid.coinmaster.coinDataActivity.CoinDataActivity
-import ir.groid.coinmaster.model.model.*
+import ir.groid.coinmaster.adapter.MarketAdapter
 import ir.groid.coinmaster.databinding.ActivityMarketBinding
-import ir.groid.coinmaster.model.CoinsAboutItem
-import ir.groid.coinmaster.model.CoinsData
+import ir.groid.coinmaster.marketActivity.MarketContract
+import ir.groid.coinmaster.marketActivity.MarketPresenter
+import ir.groid.coinmaster.model.RCoinData
+import ir.groid.coinmaster.model.RNewsData
+import ir.groid.coinmaster.responce.CoinsAboutItem
+import ir.groid.coinmaster.util.fillManager
 
-class MarketActivity : AppCompatActivity(), MarketContract.View, MarketAdapter.RecCallBack {
+class MarketActivity : AppCompatActivity(), MarketContract.View,
+    MarketAdapter.RecCallBack<RCoinData> {
 
     private lateinit var binding: ActivityMarketBinding
     private val mPresenter: MarketContract.Presenter = MarketPresenter()
@@ -42,28 +45,31 @@ class MarketActivity : AppCompatActivity(), MarketContract.View, MarketAdapter.R
         mPresenter.onDetach()
     }
 
-    override fun showNews(newsData: ArrayList<Pair<String, String>>, random: Int) {
-        binding.newsMarket.txtNews.setOnClickListener {
-            mPresenter.onRefresh()
-        }
-        binding.newsMarket.txtNews.text = newsData[random].first
-        binding.newsMarket.imgNews.setOnClickListener {
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(newsData[random].second)))
+    override fun showNews(newsData: ArrayList<RNewsData>, random: Int) {
+        binding.newsMarket.apply {
+            txtNews.setOnClickListener {
+                mPresenter.onRefresh()
+            }
+            txtNews.text = newsData[random].txtNews
+            imgNews.setOnClickListener {
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(newsData[random].urlNews)))
+            }
         }
     }
 
-    override fun showCoins(coinsData: List<CoinsData.Data>) {
-        binding.resMarket.recyclerItemMarket.adapter = MarketAdapter(coinsData, this)
-        binding.resMarket.recyclerItemMarket.layoutManager = LinearLayoutManager(this)
+    override fun showCoins(coinsData: List<RCoinData>) {
+        binding.resMarket.recyclerItemMarket.fillManager {
+            MarketAdapter(coinsData, this)
+        }
     }
 
-    override fun onTouch(data: CoinsData.Data) {
+    override fun onTouch(data: RCoinData) {
         val intent = Intent(this, CoinDataActivity::class.java)
         val bundle = Bundle()
         bundle.putParcelable("bundle1", data)
         bundle.putParcelable(
             "bundle2",
-            mPresenter.onCoinClick(this)[data.coinInfo.name] ?: CoinsAboutItem()
+            mPresenter.onCoinClick(this)[data.txtCoinName] ?: CoinsAboutItem()
         )
         intent.putExtra("dataOmade", bundle)
         startActivity(intent)

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".marketActivity.MarketActivity">
+    tools:context=".ui.MarketActivity">
 
     <include
         android:id="@+id/toolbar_market"

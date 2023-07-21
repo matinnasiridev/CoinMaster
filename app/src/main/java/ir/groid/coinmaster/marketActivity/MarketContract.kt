@@ -1,8 +1,10 @@
 package ir.groid.coinmaster.marketActivity
 
 import android.content.Context
-import ir.groid.coinmaster.model.CoinsAboutItem
-import ir.groid.coinmaster.model.CoinsData
+import ir.groid.coinmaster.model.RCoinData
+import ir.groid.coinmaster.model.RNewsData
+import ir.groid.coinmaster.responce.CoinsAboutItem
+import ir.groid.coinmaster.responce.CoinsData
 
 
 interface MarketContract {
@@ -18,8 +20,8 @@ interface MarketContract {
 
     interface View {
 
-        fun showNews(newsData: ArrayList<Pair<String, String>>, random: Int)
-        fun showCoins(coinsData: List<CoinsData.Data>)
+        fun showNews(newsData: ArrayList<RNewsData>, random: Int)
+        fun showCoins(coinsData: List<RCoinData>)
 
     }
 }
