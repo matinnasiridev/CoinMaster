@@ -8,7 +8,6 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import ir.groid.coinmaster.R
-import ir.groid.coinmaster.responce.CoinsData
 import ir.groid.coinmaster.databinding.ItemMarketSmallBinding
 import ir.groid.coinmaster.model.RCoinData
 import ir.groid.coinmaster.util.Constans.BASE_URL_IMAG
