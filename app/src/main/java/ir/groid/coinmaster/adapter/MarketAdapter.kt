@@ -11,23 +11,24 @@ import ir.groid.coinmaster.R
 import ir.groid.coinmaster.databinding.ItemMarketSmallBinding
 import ir.groid.coinmaster.model.RCoinData
 import ir.groid.coinmaster.util.Constans.BASE_URL_IMAG
+import ir.groid.coinmaster.util.RecyclerEvent
 
 
-class MarketAdapter(
-    private val data: List<RCoinData>,
-    private val apiCallback: RecCallBack<RCoinData>
-) :
+class MarketAdapter(private val event: RecyclerEvent<RCoinData>) :
     RecyclerView.Adapter<MarketAdapter.MarketViewHolder>() {
     private lateinit var binding: ItemMarketSmallBinding
+    private val listCoins = ArrayList<RCoinData>()
 
     inner class MarketViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         @SuppressLint("SetTextI18n")
-        fun binds(data: RCoinData) {
+        fun bind(data: RCoinData) {
 
-            binding.txtCoinName.text = data.txtCoinName
-            binding.txtPrice.text = data.txtPrice
-            binding.txtMarketCap.text = data.txtMarketCap
+            binding.apply {
+                txtCoinName.text = data.txtCoinName
+                txtPrice.text = data.txtPrice
+                txtMarketCap.text = data.txtMarketCap
+            }
 
             val taghir = data.txtTaghir
             if (taghir!! > 0) {
@@ -64,9 +65,7 @@ class MarketAdapter(
                 .into(binding.imgItem)
 
 
-            itemView.setOnClickListener {
-                apiCallback.onTouch(data)
-            }
+            itemView.setOnClickListener { event.onClick(data) }
         }
 
     }
@@ -77,14 +76,16 @@ class MarketAdapter(
     }
 
     override fun onBindViewHolder(holder: MarketViewHolder, position: Int) {
-        holder.binds(data[position])
+        holder.bind(listCoins[position])
     }
 
-    override fun getItemCount(): Int = data.size
+    override fun getItemCount(): Int = listCoins.size
 
-    interface RecCallBack<T> {
-        fun onTouch(data: T)
+    @SuppressLint("NotifyDataSetChanged")
+    fun refreshRecycler(newData: List<RCoinData>) {
+        listCoins.clear()
+        listCoins.addAll(newData)
+        notifyDataSetChanged()
     }
-
 }
 

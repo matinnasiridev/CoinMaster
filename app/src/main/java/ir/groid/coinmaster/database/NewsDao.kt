@@ -1,5 +1,6 @@
 package ir.groid.coinmaster.database
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -15,5 +16,5 @@ interface NewsDao {
     fun insertNews(list: List<RNewsData>)
 
     @Query("SELECT * FROM $TableNews")
-    fun getAllNews(): List<RNewsData>
+    fun getAllNews(): LiveData<List<RNewsData>>
 }

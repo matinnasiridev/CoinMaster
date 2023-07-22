@@ -14,8 +14,8 @@ object DatabaseM {
     val DatabaseM = module {
 
         single { provideDatabase(get()) }
-        single { provideCoinDao(get()) }
-        single { provideNewsDao(get()) }
+        factory { provideCoinDao(get()) }
+        factory { provideNewsDao(get()) }
         factory { provideRCoinData() }
         factory { provideRNewsData() }
     }
@@ -25,7 +25,8 @@ object DatabaseM {
             c,
             AppDatabase::class.java,
             DatabaseName
-        ).build()
+        ).allowMainThreadQueries()
+            .build()
     }
 
     private fun provideCoinDao(db: AppDatabase): CoinDao = db.coinDao
