@@ -51,7 +51,16 @@ class AppRepository(
         val changeDataType: (n: CoinsData) -> ArrayList<RCoinData> = {
             val list = ArrayList<RCoinData>()
             it.data.forEach { coin ->
-                list.add(RCoinData())
+                list.add(
+                    RCoinData(
+                        img = coin.coinInfo.url,
+                        txtCoinName = coin.coinInfo.fullName,
+                        txtTaghir = coin.rAW.uSD.cHANGE24HOUR,
+                        txtMarketCap = coin.rAW.uSD.mKTCAP,
+                        txtPrice = coin.dISPLAY.uSD.pRICE,
+                        fullName = coin.coinInfo.name
+                    )
+                )
             }
             list
         }
@@ -62,7 +71,4 @@ class AppRepository(
             .doFinally { progressBarSubject.onNext(false) }
             .ignoreElement()
     }
-
-
-
 }

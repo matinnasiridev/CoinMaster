@@ -14,10 +14,12 @@ import ir.groid.coinmaster.util.Constans.BASE_URL_IMAG
 import ir.groid.coinmaster.util.RecyclerEvent
 
 
-class MarketAdapter(private val event: RecyclerEvent<RCoinData>) :
+class MarketAdapter(
+    private val event: RecyclerEvent<RCoinData>,
+    private val listCoins: List<RCoinData>
+) :
     RecyclerView.Adapter<MarketAdapter.MarketViewHolder>() {
     private lateinit var binding: ItemMarketSmallBinding
-    private val listCoins = ArrayList<RCoinData>()
 
     inner class MarketViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
@@ -27,7 +29,6 @@ class MarketAdapter(private val event: RecyclerEvent<RCoinData>) :
             binding.apply {
                 txtCoinName.text = data.txtCoinName
                 txtPrice.text = data.txtPrice
-                txtMarketCap.text = data.txtMarketCap
             }
 
             val taghir = data.txtTaghir
@@ -53,8 +54,8 @@ class MarketAdapter(private val event: RecyclerEvent<RCoinData>) :
                 binding.txtTaghir.text = "0%"
             }
 
-            // TODO Fix This
-            val marketCap = data.txtTaghir / 1000000000
+
+            val marketCap = data.txtMarketCap!! / 1000000000
             val indexDot = marketCap.toString().indexOf('.')
             binding.txtMarketCap.text = "$" + marketCap.toString().substring(0, indexDot + 3) + " B"
 
@@ -81,11 +82,6 @@ class MarketAdapter(private val event: RecyclerEvent<RCoinData>) :
 
     override fun getItemCount(): Int = listCoins.size
 
-    @SuppressLint("NotifyDataSetChanged")
-    fun refreshRecycler(newData: List<RCoinData>) {
-        listCoins.clear()
-        listCoins.addAll(newData)
-        notifyDataSetChanged()
-    }
+
 }
 

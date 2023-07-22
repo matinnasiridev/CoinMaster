@@ -38,7 +38,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:text="USDT"
+        android:text="@string/usdt"
         app:layout_constraintStart_toEndOf="@+id/txtCoinName"
         app:layout_constraintTop_toTopOf="parent" />
 

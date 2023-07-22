@@ -16,6 +16,7 @@ data class RCoinData(
     val txtCoinName: String? = null,
     val txtTaghir: Double? = null,
     val txtPrice: String? = null,
-    val txtMarketCap: String? = null
+    val txtMarketCap: Double? = null,
+    val fullName: String? = null
 
 ) : Parcelable
