@@ -6,6 +6,8 @@ object Constans {
     const val TAG = "awdEFv"
     const val KEY = "asdwGE"
 
+    const val TimeOut = 6000
+
     // Tables:
     const val TableCoin = "table_coin"
     const val TableNews = "table_news"

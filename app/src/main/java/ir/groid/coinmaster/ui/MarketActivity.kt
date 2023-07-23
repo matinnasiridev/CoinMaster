@@ -4,12 +4,12 @@ package ir.groid.coinmaster.ui
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import io.reactivex.CompletableObserver
-import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import ir.groid.coinmaster.adapter.MarketAdapter
 import ir.groid.coinmaster.databinding.ActivityMarketBinding
@@ -19,10 +19,10 @@ import ir.groid.coinmaster.util.Constans.KEY
 import ir.groid.coinmaster.util.Constans.TAG
 import ir.groid.coinmaster.util.RecyclerEvent
 import ir.groid.coinmaster.util.setAdapter
-import ir.groid.coinmaster.util.showToast
 import ir.groid.coinmaster.util.theredHandeler
 import ir.groid.coinmaster.viewModels.MarketVM
 import org.koin.android.ext.android.inject
+import kotlin.system.measureTimeMillis
 
 
 class MarketActivity : AppCompatActivity(), RecyclerEvent<RCoinData> {
@@ -34,18 +34,52 @@ class MarketActivity : AppCompatActivity(), RecyclerEvent<RCoinData> {
         super.onCreate(savedInstanceState)
         binding = ActivityMarketBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-
         binding.toolbarMarket.toolbar.title = "Market"
+
+        swiperRefresh()
+        manageProgress()
 
         refreshNews()
         news()
 
         refreshCoins()
+        coins()
 
 
     }
 
+
+    private fun swiperRefresh() {
+        binding.swiper.setOnRefreshListener {
+            Handler(Looper.myLooper()!!).postDelayed({
+                binding.swiper.isRefreshing = false
+            }, measureTimeMillis {
+                refreshCoins()
+                refreshNews()
+            })
+        }
+    }
+
+    private fun manageProgress() {
+        viewM.addDis(viewM
+            .progressStatus()
+            .subscribe {
+                runOnUiThread {
+                    binding.apply {
+                        if (it) {
+                            progress.isVisible = true
+                            resMarket.resContainer.isVisible = false
+                            creatorName.isVisible = false
+                        } else {
+                            progress.isVisible = false
+                            resMarket.resContainer.isVisible = true
+                            creatorName.isVisible = true
+                        }
+                    }
+                }
+            }
+        )
+    }
 
     // News
     private fun refreshNews() {
@@ -67,7 +101,11 @@ class MarketActivity : AppCompatActivity(), RecyclerEvent<RCoinData> {
             })
     }
 
-    private fun news() = viewM.getAllNews().observe(this) { bindNews(it[setRandom(it.size)]) }
+    private fun news() = viewM.getAllNews().observe(this) {
+        if (it.isNotEmpty()) {
+            bindNews(it[setRandom(it.size)])
+        }
+    }
 
 
     private val setRandom: (max: Int) -> Int = { (0 until it).random() }
@@ -101,35 +139,22 @@ class MarketActivity : AppCompatActivity(), RecyclerEvent<RCoinData> {
                 override fun onError(e: Throwable) {
                     Log.e(TAG, e.message!!)
                 }
-
             })
     }
 
     private fun coins() {
         viewM.getAllCoins().observe(this) {
-            binding.resMarket.recyclerItemMarket.setAdapter { MarketAdapter(this, it) }
-        }
-    }
-    private fun manageProgress() {
-        viewM.addDis(
-            viewM.progressStatus().subscribe {
-                if (it == false) {
-                    runOnUiThread {
-                        binding.apply {
-                            progress.isVisible = it
-                            resMarket.view.isVisible = !it
-                            creatorName.isVisible = !it
-                        }
-                    }
+            if (it.isNotEmpty()) {
+                binding.resMarket.recyclerItemMarket.setAdapter {
+                    MarketAdapter(this, it)
                 }
             }
-        )
+        }
     }
 
-    override fun onClick(data: RCoinData) {
+    override fun onClick(coinData: RCoinData) {
         val bundle = Bundle()
-        bundle.putParcelable(KEY, data)
-        startActivity(Intent(this, CoinDataActivity::class.java), bundle)
+        bundle.putParcelable(KEY, viewM.getAboutData(this))
+        startActivity(Intent(this, CoinDataActivity::class.java))
     }
-
 }

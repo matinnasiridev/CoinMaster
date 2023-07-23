@@ -12,11 +12,11 @@ data class RCoinData(
     @PrimaryKey(autoGenerate = true)
     val id: Long? = null,
 
-    val img: String? = null,
-    val txtCoinName: String? = null,
-    val txtTaghir: Double? = null,
-    val txtPrice: String? = null,
-    val txtMarketCap: Double? = null,
-    val fullName: String? = null
+    val img: String? = null, // coininfo Imageurl
+    val txtCoinName: String? = null, // CoinInfo Name
+    val txtTaghir: String? = null, // CHANGEPCTHOUR
+    val txtPrice: String? = null, // display usd price
+    val txtMarketCap: String? = null, // dis usd MKTCAP
+    val fullName: String? = null // coin info Internal
 
 ) : Parcelable

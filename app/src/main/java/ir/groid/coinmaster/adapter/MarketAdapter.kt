@@ -4,13 +4,12 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
+import androidx.core.content.res.ComplexColorCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import ir.groid.coinmaster.R
 import ir.groid.coinmaster.databinding.ItemMarketSmallBinding
 import ir.groid.coinmaster.model.RCoinData
-import ir.groid.coinmaster.util.Constans.BASE_URL_IMAG
 import ir.groid.coinmaster.util.RecyclerEvent
 
 
@@ -29,45 +28,17 @@ class MarketAdapter(
             binding.apply {
                 txtCoinName.text = data.txtCoinName
                 txtPrice.text = data.txtPrice
+                txtMarketCap.text = data.txtMarketCap
+
+                txtTaghir.text = setColor(data.txtTaghir!!.toInt())
             }
 
-            val taghir = data.txtTaghir
-            if (taghir!! > 0) {
-                binding.txtTaghir.setTextColor(
-                    ContextCompat.getColor(
-                        binding.root.context,
-                        R.color.colorGain
-                    )
-                )
-                binding.txtTaghir.text =
-                    data.txtTaghir.toString().substring(0, 4) + "%"
-            } else if (taghir < 0) {
-                binding.txtTaghir.setTextColor(
-                    ContextCompat.getColor(
-                        binding.root.context,
-                        R.color.colorLoss
-                    )
-                )
-                binding.txtTaghir.text =
-                    data.txtTaghir.toString().substring(0, 5) + "%"
-            } else {
-                binding.txtTaghir.text = "0%"
-            }
-
-
-            val marketCap = data.txtMarketCap!! / 1000000000
-            val indexDot = marketCap.toString().indexOf('.')
-            binding.txtMarketCap.text = "$" + marketCap.toString().substring(0, indexDot + 3) + " B"
-
-
-            Glide
-                .with(itemView)
-                .load(BASE_URL_IMAG + data.img)
-                .into(binding.imgItem)
 
 
             itemView.setOnClickListener { event.onClick(data) }
         }
+
+        private val setColor: (s: Int) -> String = { it.toString() }
 
     }
 

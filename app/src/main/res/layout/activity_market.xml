@@ -31,8 +31,7 @@
 
                 <include
                     android:id="@+id/res_market"
-                    layout="@layout/module_rec"
-                    android:visibility="invisible" />
+                    layout="@layout/module_rec"/>
 
                 <TextView
                     android:id="@+id/creator_name"
@@ -58,6 +57,6 @@
         android:layout_gravity="center"
         android:indeterminate="true"
         android:indeterminateTint="@color/white"
-        android:indeterminateTintMode="src_atop" />
+        android:indeterminateTintMode="src_atop"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

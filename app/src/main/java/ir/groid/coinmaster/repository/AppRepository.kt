@@ -1,6 +1,7 @@
 package ir.groid.coinmaster.repository
 
 
+
 import androidx.lifecycle.LiveData
 import io.reactivex.Completable
 import io.reactivex.subjects.BehaviorSubject
@@ -26,17 +27,17 @@ class AppRepository(
     fun getAllNews(): LiveData<List<RNewsData>> = newsDao.getAllNews()
 
     fun refreshNews(): Completable {
-        val changeDataType: (n: NewsData) -> ArrayList<RNewsData> = {
+        val changeDataType: (n: NewsData) -> List<RNewsData> = {
             val list = ArrayList<RNewsData>()
             it.data.forEach { news ->
                 list.add(RNewsData(txtNews = news.title, urlNews = news.url))
             }
             list
         }
-
         return apiService
             .getTopNews()
-            .doOnSuccess { newsDao.insertNews(changeDataType(it)) }
+            .map { changeDataType(it) }
+            .doOnSuccess { newsDao.insertNews(it) }
             .ignoreElement()
     }
 
@@ -48,17 +49,17 @@ class AppRepository(
     val progressBarSubject = BehaviorSubject.create<Boolean>()
 
     fun refreshCoins(): Completable {
-        val changeDataType: (n: CoinsData) -> ArrayList<RCoinData> = {
+        val changeDataType: (n: CoinsData) -> List<RCoinData> = {
             val list = ArrayList<RCoinData>()
             it.data.forEach { coin ->
                 list.add(
                     RCoinData(
-                        img = coin.coinInfo.url,
-                        txtCoinName = coin.coinInfo.fullName,
-                        txtTaghir = coin.rAW.uSD.cHANGE24HOUR,
-                        txtMarketCap = coin.rAW.uSD.mKTCAP,
+                        img = coin.coinInfo.imageUrl,
+                        txtCoinName = coin.coinInfo.name,
+                        txtTaghir = coin.dISPLAY.uSD.cHANGEPCTHOUR,
                         txtPrice = coin.dISPLAY.uSD.pRICE,
-                        fullName = coin.coinInfo.name
+                        txtMarketCap = coin.dISPLAY.uSD.mKTCAP,
+                        fullName = coin.coinInfo.internal
                     )
                 )
             }
@@ -67,8 +68,11 @@ class AppRepository(
         progressBarSubject.onNext(true)
         return apiService
             .getTopCoins()
-            .doOnSuccess { coinDao.insert(changeDataType(it)) }
-            .doFinally { progressBarSubject.onNext(false) }
+            .map { changeDataType(it) }
+            .doOnSuccess {
+                coinDao.insert(it)
+                progressBarSubject.onNext(false)
+            }
             .ignoreElement()
     }
 }
