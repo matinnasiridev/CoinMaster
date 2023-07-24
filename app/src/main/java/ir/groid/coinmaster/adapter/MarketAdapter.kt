@@ -4,9 +4,9 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.res.ComplexColorCompat
+import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import ir.groid.coinmaster.R
 import ir.groid.coinmaster.databinding.ItemMarketSmallBinding
 import ir.groid.coinmaster.model.RCoinData
@@ -29,17 +29,26 @@ class MarketAdapter(
                 txtCoinName.text = data.txtCoinName
                 txtPrice.text = data.txtPrice
                 txtMarketCap.text = data.txtMarketCap
-
-                txtTaghir.text = setColor(data.txtTaghir!!.toInt())
+                txtTaghir.text = "${data.txtTaghir}%"
+                txtTaghir.setTextColor(
+                    ContextCompat.getColor(
+                        root.context,
+                        setColor(data.txtTaghir!!.toInt())
+                    )
+                )
             }
-
-
-
             itemView.setOnClickListener { event.onClick(data) }
         }
 
-        private val setColor: (s: Int) -> String = { it.toString() }
-
+        private val setColor: (i: Int) -> Int = {
+            if (it > 0) {
+                R.color.colorGain
+            } else if (it < 0) {
+                R.color.colorLoss
+            } else {
+                R.color.secondaryTextColor
+            }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MarketViewHolder {

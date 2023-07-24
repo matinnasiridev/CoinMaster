@@ -1,7 +1,6 @@
 package ir.groid.coinmaster.repository
 
 
-
 import androidx.lifecycle.LiveData
 import io.reactivex.Completable
 import io.reactivex.subjects.BehaviorSubject
