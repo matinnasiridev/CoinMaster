@@ -66,7 +66,7 @@ class MarketActivity : AppCompatActivity(), RecyclerEvent<RCoinData> {
             .subscribe {
                 runOnUiThread {
                     binding.apply {
-                        if (it) {
+                        if (!it) {
                             progress.isVisible = true
                             resMarket.resContainer.isVisible = false
                             creatorName.isVisible = false
@@ -101,9 +101,11 @@ class MarketActivity : AppCompatActivity(), RecyclerEvent<RCoinData> {
             })
     }
 
-    private fun news() = viewM.getAllNews().observe(this) {
-        if (it.isNotEmpty()) {
-            bindNews(it[setRandom(it.size)])
+    private fun news() {
+        viewM.getAllNews().observe(this) {
+            if (it.isNotEmpty()) {
+                bindNews(it[setRandom(it.size)])
+            }
         }
     }
 
@@ -148,6 +150,8 @@ class MarketActivity : AppCompatActivity(), RecyclerEvent<RCoinData> {
                 binding.resMarket.recyclerItemMarket.setAdapter {
                     MarketAdapter(this, it)
                 }
+            } else {
+                viewM.tCreateFakeCoins()
             }
         }
     }

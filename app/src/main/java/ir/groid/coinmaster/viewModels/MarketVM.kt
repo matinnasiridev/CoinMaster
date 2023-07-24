@@ -28,6 +28,7 @@ class MarketVM(
     fun refreshCoins(): Completable = repository.refreshCoins()
 
     // Tools
+    fun tCreateFakeCoins() = repository.tSetInDatabase(repository.tCreateFakeData())
 
     fun getAboutData(c: Context): RCoinAbout {
         val fileInString = c.assets

@@ -27,8 +27,8 @@ class MarketAdapter(
 
             binding.apply {
                 txtCoinName.text = data.txtCoinName
-                txtPrice.text = data.txtPrice
-                txtMarketCap.text = data.txtMarketCap
+                txtPrice.text = data.txtPrice ?: "Null~> Test Mode"
+                txtMarketCap.text = data.txtMarketCap?: "Null~> Test Mode"
                 txtTaghir.text = "${data.txtTaghir}%"
                 txtTaghir.setTextColor(
                     ContextCompat.getColor(
