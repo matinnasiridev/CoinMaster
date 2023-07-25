@@ -15,6 +15,7 @@ import ir.groid.coinmaster.adapter.MarketAdapter
 import ir.groid.coinmaster.databinding.ActivityMarketBinding
 import ir.groid.coinmaster.model.RCoinData
 import ir.groid.coinmaster.model.RNewsData
+import ir.groid.coinmaster.util.Constans.BtnMore
 import ir.groid.coinmaster.util.Constans.KEY
 import ir.groid.coinmaster.util.Constans.TAG
 import ir.groid.coinmaster.util.RecyclerEvent
@@ -28,24 +29,25 @@ import kotlin.system.measureTimeMillis
 class MarketActivity : AppCompatActivity(), RecyclerEvent<RCoinData> {
 
     private lateinit var binding: ActivityMarketBinding
+    private var isCoinEmpty: Boolean = true
     private val viewM: MarketVM by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMarketBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         binding.toolbarMarket.toolbar.title = "Market"
 
         swiperRefresh()
         manageProgress()
+        onMoreClick()
 
         refreshNews()
         news()
 
         refreshCoins()
         coins()
-
-
     }
 
 
@@ -66,7 +68,7 @@ class MarketActivity : AppCompatActivity(), RecyclerEvent<RCoinData> {
             .subscribe {
                 runOnUiThread {
                     binding.apply {
-                        if (!it) {
+                        if (it && !isCoinEmpty) {
                             progress.isVisible = true
                             resMarket.resContainer.isVisible = false
                             creatorName.isVisible = false
@@ -79,6 +81,12 @@ class MarketActivity : AppCompatActivity(), RecyclerEvent<RCoinData> {
                 }
             }
         )
+    }
+
+    private fun onMoreClick() {
+        binding.resMarket.btnMore.setOnClickListener {
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(BtnMore)))
+        }
     }
 
     // News
@@ -150,6 +158,7 @@ class MarketActivity : AppCompatActivity(), RecyclerEvent<RCoinData> {
                 binding.resMarket.recyclerItemMarket.setAdapter {
                     MarketAdapter(this, it)
                 }
+                isCoinEmpty = false
             } else {
                 viewM.tCreateFakeCoins()
             }

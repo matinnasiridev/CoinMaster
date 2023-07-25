@@ -3,6 +3,7 @@ package ir.groid.coinmaster.util
 
 object Constans {
 
+    const val BtnMore = "https://www.livecoinwatch.com/"
     const val TAG = "awdEFv"
     const val KEY = "asdwGE"
 
