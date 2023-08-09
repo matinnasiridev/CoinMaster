@@ -159,8 +159,6 @@ class MarketActivity : AppCompatActivity(), RecyclerEvent<RCoinData> {
                     MarketAdapter(this, it)
                 }
                 isCoinEmpty = false
-            } else {
-                viewM.tCreateFakeCoins()
             }
         }
     }

@@ -64,27 +64,13 @@ class AppRepository(
             }
             list
         }
-        progressBarSubject.onNext(true)
         return apiService
             .getTopCoins()
             .map { changeDataType(it) }
             .doOnSuccess {
                 coinDao.insert(it)
-                progressBarSubject.onNext(false)
             }
             .ignoreElement()
     }
-
-    // Tools
-    fun tCreateFakeData(): List<RCoinData> {
-        return listOf(
-            RCoinData(txtCoinName = "BTD", txtTaghir = "34234"),
-            RCoinData(txtCoinName = "tsf", txtTaghir = "-34234"),
-            RCoinData(txtCoinName = "sef", txtTaghir = "34234"),
-            RCoinData(txtCoinName = "BTdfD", txtTaghir = "0")
-        )
-    }
-
-    fun tSetInDatabase(l: List<RCoinData>) = coinDao.insert(l)
 
 }
