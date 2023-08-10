@@ -9,8 +9,11 @@ import android.os.Looper
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
+import com.facebook.shimmer.Shimmer
+import com.facebook.shimmer.ShimmerFrameLayout
 import io.reactivex.CompletableObserver
 import io.reactivex.disposables.Disposable
+import ir.groid.coinmaster.R
 import ir.groid.coinmaster.adapter.MarketAdapter
 import ir.groid.coinmaster.databinding.ActivityMarketBinding
 import ir.groid.coinmaster.model.RCoinData
@@ -20,7 +23,7 @@ import ir.groid.coinmaster.util.Constans.KEY
 import ir.groid.coinmaster.util.Constans.TAG
 import ir.groid.coinmaster.util.RecyclerEvent
 import ir.groid.coinmaster.util.setAdapter
-import ir.groid.coinmaster.util.theredHandeler
+import ir.groid.coinmaster.util.thereadHandeler
 import ir.groid.coinmaster.viewModels.MarketVM
 import org.koin.android.ext.android.inject
 import kotlin.system.measureTimeMillis
@@ -29,8 +32,9 @@ import kotlin.system.measureTimeMillis
 class MarketActivity : AppCompatActivity(), RecyclerEvent<RCoinData> {
 
     private lateinit var binding: ActivityMarketBinding
-    private var isCoinEmpty: Boolean = true
     private val viewM: MarketVM by inject()
+    private var isCoinEmpty: Boolean = true
+    private lateinit var cAdapter: MarketAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,7 +43,13 @@ class MarketActivity : AppCompatActivity(), RecyclerEvent<RCoinData> {
 
         binding.toolbarMarket.toolbar.title = "Market"
 
+        initUI()
+    }
+
+    private fun initUI() {
+
         swiperRefresh()
+        fillRv()
         manageProgress()
         onMoreClick()
 
@@ -50,6 +60,13 @@ class MarketActivity : AppCompatActivity(), RecyclerEvent<RCoinData> {
         coins()
     }
 
+    private fun fillRv() {
+        cAdapter = MarketAdapter(this)
+        binding.resMarket.recyclerItemMarket.setAdapter {
+            cAdapter
+        }
+    }
+
 
     private fun swiperRefresh() {
         binding.swiper.setOnRefreshListener {
@@ -58,11 +75,15 @@ class MarketActivity : AppCompatActivity(), RecyclerEvent<RCoinData> {
             }, measureTimeMillis {
                 refreshCoins()
                 refreshNews()
+                manageProgress()
             })
         }
     }
 
     private fun manageProgress() {
+        binding.apply {
+            swiper.setColorSchemeResources(R.color.colorPrimary)
+        }
         viewM.addDis(viewM
             .progressStatus()
             .subscribe {
@@ -93,7 +114,7 @@ class MarketActivity : AppCompatActivity(), RecyclerEvent<RCoinData> {
     private fun refreshNews() {
         viewM
             .refreshNews()
-            .theredHandeler()
+            .thereadHandeler()
             .subscribe(object : CompletableObserver {
                 override fun onSubscribe(d: Disposable) {
                     viewM.addDis(d)
@@ -136,7 +157,7 @@ class MarketActivity : AppCompatActivity(), RecyclerEvent<RCoinData> {
     private fun refreshCoins() {
         viewM
             .refreshCoins()
-            .theredHandeler()
+            .thereadHandeler()
             .subscribe(object : CompletableObserver {
                 override fun onSubscribe(d: Disposable) {
                     viewM.addDis(d)
@@ -155,9 +176,7 @@ class MarketActivity : AppCompatActivity(), RecyclerEvent<RCoinData> {
     private fun coins() {
         viewM.getAllCoins().observe(this) {
             if (it.isNotEmpty()) {
-                binding.resMarket.recyclerItemMarket.setAdapter {
-                    MarketAdapter(this, it)
-                }
+                cAdapter.submit(it)
                 isCoinEmpty = false
             }
         }

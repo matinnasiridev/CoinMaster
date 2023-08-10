@@ -53,6 +53,7 @@ class AppRepository(
             it.data.forEach { coin ->
                 list.add(
                     RCoinData(
+                        id = coin.coinInfo.id.toLong(),
                         img = coin.coinInfo.imageUrl,
                         txtCoinName = coin.coinInfo.name,
                         txtTaghir = coin.dISPLAY.uSD.cHANGEPCTHOUR,
@@ -64,11 +65,15 @@ class AppRepository(
             }
             list
         }
+
+        progressBarSubject.onNext(true)
+
         return apiService
             .getTopCoins()
             .map { changeDataType(it) }
             .doOnSuccess {
                 coinDao.insert(it)
+                progressBarSubject.onNext(false)
             }
             .ignoreElement()
     }
