@@ -18,18 +18,14 @@ data class RCoinData(
     val txtPrice: String? = null, // display usd price
     val txtMarketCap: String? = null, // dis usd MKTCAP
     val fullName: String? = null, // coin info Internal
-    val statistics: RCoinStatistics? = null
-
+    val open: String? = null,
+    val todayHigh: String? = null,
+    val todayLow: String? = null,
+    val changeToday: String? = null,
+    val Algorithm: String? = null,
+    val totalVolume: String? = null,
+    val marketCap: String? = null,
+    val supply: String? = null
 ) : Parcelable
 
-@Parcelize
-data class RCoinStatistics(
-    val open: String,
-    val todayHigh: String,
-    val todayLow: String,
-    val changeToday: String,
-    val Algorithm: String,
-    val totalVolume: String,
-    val marketCap: String,
-    val supply: String
-) : Parcelable
+

@@ -5,7 +5,9 @@ object Constans {
 
     const val BtnMore = "https://www.livecoinwatch.com/"
     const val TAG = "awdEFv"
-    const val KEY = "asdwGE"
+    const val CENTERKEY = "asdwGE"
+    const val KEYONE = "asdwGE"
+    const val KEYTWO = "awdbtb"
 
     const val TimeOut = 6000
 

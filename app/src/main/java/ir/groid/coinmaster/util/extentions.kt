@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.android.material.button.MaterialButton
 import io.reactivex.Completable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -40,6 +41,14 @@ fun ImageView.load(url: String) {
 }
 
 fun TextView.lunch(url: String?) {
+    this.text = url
+    this.setOnClickListener {
+        if (!url.isNullOrEmpty() && url != "There is no information")
+            this.context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+    }
+}
+
+fun MaterialButton.open(url: String?) {
     this.setOnClickListener {
         if (!url.isNullOrEmpty())
             this.context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))

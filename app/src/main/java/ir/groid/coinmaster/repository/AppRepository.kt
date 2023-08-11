@@ -8,7 +8,6 @@ import ir.groid.coinmaster.api.ApiService
 import ir.groid.coinmaster.database.CoinDao
 import ir.groid.coinmaster.database.NewsDao
 import ir.groid.coinmaster.model.RCoinData
-import ir.groid.coinmaster.model.RCoinStatistics
 import ir.groid.coinmaster.model.RNewsData
 import ir.groid.coinmaster.responce.CoinsData
 import ir.groid.coinmaster.responce.NewsData
@@ -61,7 +60,16 @@ class AppRepository(
                         txtPrice = coin.dISPLAY.uSD.pRICE,
                         txtMarketCap = coin.dISPLAY.uSD.mKTCAP,
                         fullName = coin.coinInfo.internal,
-                        statistics = null
+
+                        open = coin.dISPLAY.uSD.oPEN24HOUR,
+                        todayHigh = coin.dISPLAY.uSD.hIGH24HOUR,
+                        todayLow = coin.dISPLAY.uSD.lOW24HOUR,
+                        changeToday = coin.dISPLAY.uSD.cHANGE24HOUR,
+                        Algorithm = coin.coinInfo.algorithm,
+                        totalVolume = coin.dISPLAY.uSD.tOTALVOLUME24H,
+                        marketCap = coin.dISPLAY.uSD.mKTCAP,
+                        supply = coin.dISPLAY.uSD.sUPPLY
+
                     )
                 )
             }

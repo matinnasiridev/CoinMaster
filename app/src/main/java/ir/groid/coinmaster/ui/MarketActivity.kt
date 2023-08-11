@@ -17,10 +17,13 @@ import ir.groid.coinmaster.databinding.ActivityMarketBinding
 import ir.groid.coinmaster.model.RCoinData
 import ir.groid.coinmaster.model.RNewsData
 import ir.groid.coinmaster.util.Constans.BtnMore
-import ir.groid.coinmaster.util.Constans.KEY
+import ir.groid.coinmaster.util.Constans.CENTERKEY
+import ir.groid.coinmaster.util.Constans.KEYONE
+import ir.groid.coinmaster.util.Constans.KEYTWO
 import ir.groid.coinmaster.util.Constans.TAG
 import ir.groid.coinmaster.util.RecyclerEvent
 import ir.groid.coinmaster.util.lunch
+import ir.groid.coinmaster.util.open
 import ir.groid.coinmaster.util.setAdapter
 import ir.groid.coinmaster.util.thereadHandeler
 import ir.groid.coinmaster.viewModels.MarketVM
@@ -104,7 +107,7 @@ class MarketActivity : AppCompatActivity(), RecyclerEvent<RCoinData> {
     }
 
     private fun onMoreClick() {
-        binding.resMarket.btnMore.lunch(BtnMore)
+        binding.resMarket.btnMore.open(BtnMore)
     }
 
     // News
@@ -181,7 +184,8 @@ class MarketActivity : AppCompatActivity(), RecyclerEvent<RCoinData> {
 
     override fun onClick(coinData: RCoinData) {
         val bundle = Bundle()
-        bundle.putParcelable(KEY, viewM.getAboutDataByName(this, coinData.fullName!!))
-        startActivity(Intent(this, CoinDataActivity::class.java).putExtra("about", bundle))
+        bundle.putParcelable(KEYONE, coinData)
+        bundle.putParcelable(KEYTWO, viewM.getAboutDataByName(this, coinData.fullName!!))
+        startActivity(Intent(this, CoinDataActivity::class.java).putExtra(CENTERKEY, bundle))
     }
 }
