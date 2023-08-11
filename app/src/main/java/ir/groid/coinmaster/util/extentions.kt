@@ -1,7 +1,10 @@
 package ir.groid.coinmaster.util
 
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -34,4 +37,11 @@ fun ImageView.load(url: String) {
         .with(this.context)
         .load(url)
         .into(this)
+}
+
+fun TextView.lunch(url: String?) {
+    this.setOnClickListener {
+        if (!url.isNullOrEmpty())
+            this.context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+    }
 }

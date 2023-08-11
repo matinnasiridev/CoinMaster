@@ -8,6 +8,7 @@ import ir.groid.coinmaster.api.ApiService
 import ir.groid.coinmaster.database.CoinDao
 import ir.groid.coinmaster.database.NewsDao
 import ir.groid.coinmaster.model.RCoinData
+import ir.groid.coinmaster.model.RCoinStatistics
 import ir.groid.coinmaster.model.RNewsData
 import ir.groid.coinmaster.responce.CoinsData
 import ir.groid.coinmaster.responce.NewsData
@@ -59,7 +60,8 @@ class AppRepository(
                         txtTaghir = coin.dISPLAY.uSD.cHANGEPCTHOUR,
                         txtPrice = coin.dISPLAY.uSD.pRICE,
                         txtMarketCap = coin.dISPLAY.uSD.mKTCAP,
-                        fullName = coin.coinInfo.internal
+                        fullName = coin.coinInfo.internal,
+                        statistics = null
                     )
                 )
             }

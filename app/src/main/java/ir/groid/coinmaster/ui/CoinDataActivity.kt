@@ -3,6 +3,7 @@ package ir.groid.coinmaster.ui
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import ir.groid.coinmaster.databinding.ActivityCoinDataBinding
+import ir.groid.coinmaster.util.lunch
 import ir.groid.coinmaster.viewModels.CoinDataVM
 import org.koin.android.ext.android.inject
 
@@ -16,6 +17,23 @@ class CoinDataActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
+        initUI()
+    }
 
+    private fun initUI() {
+        about()
+    }
+
+    private fun about() {
+
+
+        // Open Url!
+        binding.layoutAbout.apply {
+            txtWebsite.lunch("")
+            txtTwitter.lunch("")
+            txtRaddit.lunch("")
+            txtGithub.lunch("")
+        }
+        // -->
     }
 }

@@ -17,6 +17,19 @@ data class RCoinData(
     val txtTaghir: String? = null, // CHANGEPCTHOUR
     val txtPrice: String? = null, // display usd price
     val txtMarketCap: String? = null, // dis usd MKTCAP
-    val fullName: String? = null // coin info Internal
+    val fullName: String? = null, // coin info Internal
+    val statistics: RCoinStatistics? = null
 
+) : Parcelable
+
+@Parcelize
+data class RCoinStatistics(
+    val open: String,
+    val todayHigh: String,
+    val todayLow: String,
+    val changeToday: String,
+    val Algorithm: String,
+    val totalVolume: String,
+    val marketCap: String,
+    val supply: String
 ) : Parcelable

@@ -9,8 +9,6 @@ import android.os.Looper
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
-import com.facebook.shimmer.Shimmer
-import com.facebook.shimmer.ShimmerFrameLayout
 import io.reactivex.CompletableObserver
 import io.reactivex.disposables.Disposable
 import ir.groid.coinmaster.R
@@ -22,6 +20,7 @@ import ir.groid.coinmaster.util.Constans.BtnMore
 import ir.groid.coinmaster.util.Constans.KEY
 import ir.groid.coinmaster.util.Constans.TAG
 import ir.groid.coinmaster.util.RecyclerEvent
+import ir.groid.coinmaster.util.lunch
 import ir.groid.coinmaster.util.setAdapter
 import ir.groid.coinmaster.util.thereadHandeler
 import ir.groid.coinmaster.viewModels.MarketVM
@@ -105,9 +104,7 @@ class MarketActivity : AppCompatActivity(), RecyclerEvent<RCoinData> {
     }
 
     private fun onMoreClick() {
-        binding.resMarket.btnMore.setOnClickListener {
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(BtnMore)))
-        }
+        binding.resMarket.btnMore.lunch(BtnMore)
     }
 
     // News
@@ -184,7 +181,7 @@ class MarketActivity : AppCompatActivity(), RecyclerEvent<RCoinData> {
 
     override fun onClick(coinData: RCoinData) {
         val bundle = Bundle()
-        bundle.putParcelable(KEY, viewM.getAboutData(this))
-        startActivity(Intent(this, CoinDataActivity::class.java))
+        bundle.putParcelable(KEY, viewM.getAboutDataByName(this, coinData.fullName!!))
+        startActivity(Intent(this, CoinDataActivity::class.java).putExtra("about", bundle))
     }
 }

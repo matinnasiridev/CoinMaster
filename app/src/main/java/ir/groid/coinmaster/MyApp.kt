@@ -1,10 +1,7 @@
 package ir.groid.coinmaster
 
 import android.app.Application
-import ir.groid.coinmaster.di.ApiM
-import ir.groid.coinmaster.di.DatabaseM
-import ir.groid.coinmaster.di.ToolsM
-import ir.groid.coinmaster.di.ViewModelM
+import ir.groid.coinmaster.di.AppModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
@@ -18,16 +15,10 @@ class MyApp : Application() {
             androidContext(this@MyApp)
             modules(
                 listOf(
-                    // Module Repository
-                    DatabaseM.DatabaseM,
-                    ApiM.ApiM,
-
-                    // Module Tools
-                    ToolsM.ToolsM,
-
-                    // ViewModel
-                    ViewModelM.ViewModelM
-
+                    AppModule.ApiM,
+                    AppModule.DatabaseM,
+                    AppModule.ViewModelM,
+                    AppModule.ToolsM
                 )
             )
         }
