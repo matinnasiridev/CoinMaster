@@ -32,7 +32,6 @@ class MarketActivity : AppCompatActivity(), RecyclerEvent<RCoinData> {
 
     private lateinit var binding: ActivityMarketBinding
     private val viewM: MarketVM by inject()
-    private var isCoinEmpty: Boolean = true
     private lateinit var cAdapter: MarketAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,7 +39,7 @@ class MarketActivity : AppCompatActivity(), RecyclerEvent<RCoinData> {
         binding = ActivityMarketBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.toolbarMarket.toolbar.title = "Market"
+
         cAdapter = MarketAdapter(this)
 
         initUI()
@@ -69,6 +68,7 @@ class MarketActivity : AppCompatActivity(), RecyclerEvent<RCoinData> {
             Handler(Looper.myLooper()!!).postDelayed({
                 binding.swiper.isRefreshing = false
             }, measureTimeMillis {
+                cAdapter.refreshActive(false)
                 refreshCoins()
                 refreshNews()
             })
@@ -146,8 +146,8 @@ class MarketActivity : AppCompatActivity(), RecyclerEvent<RCoinData> {
         viewM.getAllCoins().observe(this) {
             if (it.isNotEmpty()) {
                 cAdapter.submit(it)
+                cAdapter.refreshActive(true)
                 fillRv()
-                isCoinEmpty = false
             }
         }
     }

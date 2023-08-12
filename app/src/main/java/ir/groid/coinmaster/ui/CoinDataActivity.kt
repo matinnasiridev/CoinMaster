@@ -2,12 +2,16 @@ package ir.groid.coinmaster.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import ir.groid.coinmaster.databinding.ActivityCoinDataBinding
 import ir.groid.coinmaster.model.RCoinAbout
 import ir.groid.coinmaster.model.RCoinData
+import ir.groid.coinmaster.util.Constans.BASE_URL_IMAG
+import ir.groid.coinmaster.util.Constans.BASE_URL_TWITT
 import ir.groid.coinmaster.util.Constans.CENTERKEY
 import ir.groid.coinmaster.util.Constans.KEYONE
 import ir.groid.coinmaster.util.Constans.KEYTWO
+import ir.groid.coinmaster.util.load
 import ir.groid.coinmaster.util.lunch
 import ir.groid.coinmaster.viewModels.CoinDataVM
 import org.koin.android.ext.android.inject
@@ -31,7 +35,7 @@ class CoinDataActivity : AppCompatActivity() {
     private fun getDataFromBundle() {
         val get = intent.getBundleExtra(CENTERKEY)!!
         cd = get.getParcelable(KEYONE)!!
-        ca = get. getParcelable(KEYTWO)!!
+        ca = get.getParcelable(KEYTWO)!!
     }
 
     private fun initUI() {
@@ -43,8 +47,12 @@ class CoinDataActivity : AppCompatActivity() {
 
 
     private fun header() {
-        binding.apply {
-            layoutToolbar.toolbar.title = cd.fullName
+        binding.toolbarMarket.apply {
+            ibT.isVisible = true
+            ivT.isVisible = true
+            ibT.setOnClickListener { onBackPressed() }
+            ivT.load(BASE_URL_IMAG + cd.img)
+            tvT.text = cd.fullName
         }
     }
 
@@ -70,7 +78,7 @@ class CoinDataActivity : AppCompatActivity() {
     private fun about() {
         binding.layoutAbout.apply {
             txtWebsite.lunch(ca.coinWebsite)
-            txtTwitter.lunch("https://twitter.com/${ca.coinTwitter}")
+            txtTwitter.lunch(BASE_URL_TWITT + ca.coinTwitter)
             txtRaddit.lunch(ca.coinReddit)
             txtGithub.lunch(ca.coinGithub)
             txtAboutCoin.text = ca.coinDes

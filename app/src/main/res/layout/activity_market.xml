@@ -31,7 +31,7 @@
 
                 <include
                     android:id="@+id/res_market"
-                    layout="@layout/module_rec"/>
+                    layout="@layout/module_rec" />
 
                 <TextView
                     android:id="@+id/creator_name"

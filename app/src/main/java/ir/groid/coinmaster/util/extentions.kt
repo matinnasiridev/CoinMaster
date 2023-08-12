@@ -43,7 +43,7 @@ fun ImageView.load(url: String) {
 fun TextView.lunch(url: String?) {
     this.text = url
     this.setOnClickListener {
-        if (!url.isNullOrEmpty() && url != "There is no information")
+        if (!url.isNullOrEmpty() && "https://" in url)
             this.context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
     }
 }

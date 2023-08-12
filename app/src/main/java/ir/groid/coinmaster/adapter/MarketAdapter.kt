@@ -22,7 +22,7 @@ class MarketAdapter(
     private lateinit var binding: ItemMarketNormalBinding
     private lateinit var binding2: ItemMarketShimmerBinding
     private var listCoins: ArrayList<RCoinData> = arrayListOf()
-    private var viewT: Int = 1
+    private var viewT: Boolean = false // true == Normal View
 
     inner class MarketViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
@@ -59,7 +59,6 @@ class MarketAdapter(
                 R.color.secondaryTextColor
             }
         }
-        val bindShimmerMode: () -> Unit = { }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MarketViewHolder {
@@ -77,23 +76,13 @@ class MarketAdapter(
     }
 
     override fun onBindViewHolder(holder: MarketViewHolder, position: Int) {
-        if (viewT == 1)
+        if (viewT)
             holder.bind(listCoins[position])
-        else
-            holder.bindShimmerMode
     }
 
-    override fun getItemViewType(position: Int): Int {
-        return if (listCoins.size == 0) {
-            viewT = 2
-            2
-        } else {
-            viewT = 1
-            1
-        }
-    }
+    override fun getItemViewType(position: Int): Int = if (viewT) 1 else 2
 
-    override fun getItemCount(): Int = if (listCoins.size == 0) 10 else listCoins.size
+    override fun getItemCount(): Int = if (!viewT) 10 else listCoins.size
 
 
     @SuppressLint("NotifyDataSetChanged")
@@ -102,5 +91,10 @@ class MarketAdapter(
         listCoins.addAll(new)
         notifyDataSetChanged()
     }
-}
 
+    @SuppressLint("NotifyDataSetChanged")
+    fun refreshActive(ch: Boolean) {
+        viewT = ch
+        notifyDataSetChanged()
+    }
+}

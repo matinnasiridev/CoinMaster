@@ -24,6 +24,7 @@ object Constans {
     // Base
     const val BASE_URL = "https://min-api.cryptocompare.com/data/"
     const val BASE_URL_IMAG = "https://cryptocompare.com"
+    const val BASE_URL_TWITT = "https://twitter.com/"
     const val API_KEYS =
         "authorization: Apikey 13c7c09a98aecbb2a156283c938ba6be96b93bd607dd9ec5896e2e3c6b61427a"
     const val APP_NAME = "Coin Master"
