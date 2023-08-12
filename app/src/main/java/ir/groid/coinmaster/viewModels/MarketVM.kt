@@ -2,15 +2,14 @@ package ir.groid.coinmaster.viewModels
 
 
 import android.content.Context
-import android.widget.ImageView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import com.bumptech.glide.RequestManager
 import com.google.gson.Gson
 import io.reactivex.Completable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.subjects.BehaviorSubject
-import ir.groid.coinmaster.di.ImageLoader
 import ir.groid.coinmaster.model.RCoinAbout
 import ir.groid.coinmaster.model.RCoinData
 import ir.groid.coinmaster.model.RNewsData
@@ -18,8 +17,7 @@ import ir.groid.coinmaster.repository.AppRepository
 import ir.groid.coinmaster.responce.CoinsAboutData
 
 class MarketVM(
-    private val repository: AppRepository,
-    private val imageLoader: ImageLoader
+    private val repository: AppRepository
 ) : ViewModel() {
     private val dis = CompositeDisposable()
     fun getAllNews(): LiveData<List<RNewsData>> = repository.getAllNews()
@@ -31,14 +29,6 @@ class MarketVM(
     fun progressStatus(): BehaviorSubject<Boolean> = repository.progressBarSubject
 
     fun refreshCoins(): Completable = repository.refreshCoins()
-
-    fun ImageView.load(url: String) {
-        imageLoader.load(url, this)
-    }
-
-    fun getStatistics(coinName: String){
-
-    }
 
     fun getAboutDataByName(c: Context, coinName: String): RCoinAbout {
         val file = c.assets

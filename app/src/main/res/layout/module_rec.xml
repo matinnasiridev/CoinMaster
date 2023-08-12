@@ -13,18 +13,19 @@
     android:paddingTop="12dp"
     android:paddingEnd="12dp"
     android:paddingBottom="4dp"
-    android:visibility="gone"
+    android:visibility="visible"
     app:layout_goneMarginStart="12dp">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerItemMarket"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layoutAnimation="@anim/recycler_anim"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:itemCount="5"
-        tools:listitem="@layout/item_market_small" />
+        tools:listitem="@layout/item_market_normal" />
 
     <View
         android:id="@+id/view"

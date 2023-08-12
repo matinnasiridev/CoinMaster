@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.facebook.shimmer.ShimmerFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="14dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp">
+
+
+        <ImageView
+            android:id="@+id/img_item"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:importantForAccessibility="no"
+            android:src="@color/secondaryTextColor"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/txtCoinName"
+            style="@style/CoinBitText.Body1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:background="@color/secondaryTextColor"
+            android:text="BTCgrgrggggjyj"
+            android:textColor="@color/secondaryTextColor"
+            app:layout_constraintStart_toEndOf="@+id/img_item"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <TextView
+            android:id="@+id/txtTaghir"
+            style="@style/CoinBitText.Body1Alternate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="4dp"
+            android:background="@color/secondaryTextColor"
+            android:text="CoinBase"
+            app:layout_constraintStart_toEndOf="@+id/img_item"
+            app:layout_constraintTop_toBottomOf="@+id/txtCoinName" />
+
+        <TextView
+            android:id="@+id/txtPrice"
+            style="@style/CoinBitText.Body1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/secondaryTextColor"
+            android:text="$3.185"
+            android:textColor="@color/secondaryTextColor"
+            app:layout_constraintBottom_toBottomOf="@+id/txtPrice"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/txtPrice"
+            tools:ignore="NotSibling" />
+
+        <TextView
+            android:id="@+id/txtMarketCap"
+            style="@style/CoinBitText.Body1Alternate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:background="@color/secondaryTextColor"
+            android:text="$2.4 million"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtPrice" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.facebook.shimmer.ShimmerFrameLayout>

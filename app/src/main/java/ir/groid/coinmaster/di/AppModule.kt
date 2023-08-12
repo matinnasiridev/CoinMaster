@@ -2,6 +2,7 @@ package ir.groid.coinmaster.di
 
 import android.content.Context
 import androidx.room.Room
+import com.bumptech.glide.Glide
 import ir.groid.coinmaster.api.ApiService
 import ir.groid.coinmaster.database.AppDatabase
 import ir.groid.coinmaster.database.CoinDao
@@ -35,11 +36,11 @@ object AppModule {
 
     val ToolsM = module {
         single { AppRepository(get(), get(), get()) }
-        single<ImageLoader> { GlideImageLoader() }
+        // single { (c: Context) -> Glide.with(c) }
     }
 
     val ViewModelM = module {
-        viewModel { MarketVM(get(), get()) }
+        viewModel { MarketVM(get()) }
         viewModel { CoinDataVM(get()) }
     }
 

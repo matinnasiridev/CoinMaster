@@ -8,10 +8,8 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isVisible
 import io.reactivex.CompletableObserver
 import io.reactivex.disposables.Disposable
-import ir.groid.coinmaster.R
 import ir.groid.coinmaster.adapter.MarketAdapter
 import ir.groid.coinmaster.databinding.ActivityMarketBinding
 import ir.groid.coinmaster.model.RCoinData
@@ -22,7 +20,6 @@ import ir.groid.coinmaster.util.Constans.KEYONE
 import ir.groid.coinmaster.util.Constans.KEYTWO
 import ir.groid.coinmaster.util.Constans.TAG
 import ir.groid.coinmaster.util.RecyclerEvent
-import ir.groid.coinmaster.util.lunch
 import ir.groid.coinmaster.util.open
 import ir.groid.coinmaster.util.setAdapter
 import ir.groid.coinmaster.util.thereadHandeler
@@ -44,6 +41,7 @@ class MarketActivity : AppCompatActivity(), RecyclerEvent<RCoinData> {
         setContentView(binding.root)
 
         binding.toolbarMarket.toolbar.title = "Market"
+        cAdapter = MarketAdapter(this)
 
         initUI()
     }
@@ -51,10 +49,8 @@ class MarketActivity : AppCompatActivity(), RecyclerEvent<RCoinData> {
     private fun initUI() {
 
         swiperRefresh()
-        fillRv()
-        manageProgress()
         onMoreClick()
-
+        fillRv()
         refreshNews()
         news()
 
@@ -63,12 +59,10 @@ class MarketActivity : AppCompatActivity(), RecyclerEvent<RCoinData> {
     }
 
     private fun fillRv() {
-        cAdapter = MarketAdapter(this)
         binding.resMarket.recyclerItemMarket.setAdapter {
             cAdapter
         }
     }
-
 
     private fun swiperRefresh() {
         binding.swiper.setOnRefreshListener {
@@ -77,33 +71,8 @@ class MarketActivity : AppCompatActivity(), RecyclerEvent<RCoinData> {
             }, measureTimeMillis {
                 refreshCoins()
                 refreshNews()
-                manageProgress()
             })
         }
-    }
-
-    private fun manageProgress() {
-        binding.apply {
-            swiper.setColorSchemeResources(R.color.colorPrimary)
-        }
-        viewM.addDis(viewM
-            .progressStatus()
-            .subscribe {
-                runOnUiThread {
-                    binding.apply {
-                        if (it && !isCoinEmpty) {
-                            progress.isVisible = true
-                            resMarket.resContainer.isVisible = false
-                            creatorName.isVisible = false
-                        } else {
-                            progress.isVisible = false
-                            resMarket.resContainer.isVisible = true
-                            creatorName.isVisible = true
-                        }
-                    }
-                }
-            }
-        )
     }
 
     private fun onMoreClick() {
@@ -177,6 +146,7 @@ class MarketActivity : AppCompatActivity(), RecyclerEvent<RCoinData> {
         viewM.getAllCoins().observe(this) {
             if (it.isNotEmpty()) {
                 cAdapter.submit(it)
+                fillRv()
                 isCoinEmpty = false
             }
         }
@@ -185,7 +155,7 @@ class MarketActivity : AppCompatActivity(), RecyclerEvent<RCoinData> {
     override fun onClick(coinData: RCoinData) {
         val bundle = Bundle()
         bundle.putParcelable(KEYONE, coinData)
-        bundle.putParcelable(KEYTWO, viewM.getAboutDataByName(this, coinData.fullName!!))
+        bundle.putParcelable(KEYTWO, viewM.getAboutDataByName(this, coinData.txtCoinName!!))
         startActivity(Intent(this, CoinDataActivity::class.java).putExtra(CENTERKEY, bundle))
     }
 }

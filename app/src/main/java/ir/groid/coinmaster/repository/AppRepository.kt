@@ -59,7 +59,7 @@ class AppRepository(
                         txtTaghir = coin.dISPLAY.uSD.cHANGEPCTHOUR,
                         txtPrice = coin.dISPLAY.uSD.pRICE,
                         txtMarketCap = coin.dISPLAY.uSD.mKTCAP,
-                        fullName = coin.coinInfo.internal,
+                        fullName = coin.coinInfo.fullName,
 
                         open = coin.dISPLAY.uSD.oPEN24HOUR,
                         todayHigh = coin.dISPLAY.uSD.hIGH24HOUR,
