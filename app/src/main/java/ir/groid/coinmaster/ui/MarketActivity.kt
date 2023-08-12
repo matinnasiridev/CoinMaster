@@ -22,6 +22,7 @@ import ir.groid.coinmaster.util.Constans.TAG
 import ir.groid.coinmaster.util.RecyclerEvent
 import ir.groid.coinmaster.util.open
 import ir.groid.coinmaster.util.setAdapter
+import ir.groid.coinmaster.util.showToast
 import ir.groid.coinmaster.util.thereadHandeler
 import ir.groid.coinmaster.viewModels.MarketVM
 import org.koin.android.ext.android.inject
@@ -42,6 +43,10 @@ class MarketActivity : AppCompatActivity(), RecyclerEvent<RCoinData> {
 
         cAdapter = MarketAdapter(this)
 
+        viewM.internetConnected(this) {
+            showToast("InterNet Connect!")
+        }
+
         initUI()
     }
 
@@ -50,11 +55,17 @@ class MarketActivity : AppCompatActivity(), RecyclerEvent<RCoinData> {
         swiperRefresh()
         onMoreClick()
         fillRv()
+        shimmerManager()
+
         refreshNews()
         news()
 
         refreshCoins()
         coins()
+    }
+
+    private fun shimmerManager() {
+        cAdapter.refreshActive(true)
     }
 
     private fun fillRv() {
@@ -68,7 +79,7 @@ class MarketActivity : AppCompatActivity(), RecyclerEvent<RCoinData> {
             Handler(Looper.myLooper()!!).postDelayed({
                 binding.swiper.isRefreshing = false
             }, measureTimeMillis {
-                cAdapter.refreshActive(false)
+                shimmerManager()
                 refreshCoins()
                 refreshNews()
             })
@@ -146,7 +157,7 @@ class MarketActivity : AppCompatActivity(), RecyclerEvent<RCoinData> {
         viewM.getAllCoins().observe(this) {
             if (it.isNotEmpty()) {
                 cAdapter.submit(it)
-                cAdapter.refreshActive(true)
+                shimmerManager()
                 fillRv()
             }
         }

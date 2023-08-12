@@ -45,7 +45,7 @@ class AppRepository(
      */
     fun getAllCoins(): LiveData<List<RCoinData>> = coinDao.getAll()
 
-    val progressBarSubject = BehaviorSubject.create<Boolean>()
+    val shimmerSubject = BehaviorSubject.create<Boolean>()
 
     fun refreshCoins(): Completable {
         val changeDataType: (n: CoinsData) -> List<RCoinData> = {
@@ -76,14 +76,14 @@ class AppRepository(
             list
         }
 
-        progressBarSubject.onNext(true)
+        shimmerSubject.onNext(true)
 
         return apiService
             .getTopCoins()
             .map { changeDataType(it) }
             .doOnSuccess {
                 coinDao.insert(it)
-                progressBarSubject.onNext(false)
+                shimmerSubject.onNext(false)
             }
             .ignoreElement()
     }

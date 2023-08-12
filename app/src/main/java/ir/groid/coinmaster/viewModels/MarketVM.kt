@@ -1,10 +1,12 @@
 package ir.groid.coinmaster.viewModels
 
 
+import android.content.BroadcastReceiver
 import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import com.bumptech.glide.RequestManager
 import com.google.gson.Gson
 import io.reactivex.Completable
 import io.reactivex.disposables.CompositeDisposable
@@ -15,6 +17,7 @@ import ir.groid.coinmaster.model.RCoinData
 import ir.groid.coinmaster.model.RNewsData
 import ir.groid.coinmaster.repository.AppRepository
 import ir.groid.coinmaster.responce.CoinsAboutData
+import ir.groid.coinmaster.util.NetworkChecker
 
 class MarketVM(
     private val repository: AppRepository
@@ -26,9 +29,35 @@ class MarketVM(
 
     fun getAllCoins(): LiveData<List<RCoinData>> = repository.getAllCoins()
 
-    fun progressStatus(): BehaviorSubject<Boolean> = repository.progressBarSubject
+    fun shimmerStatus(): BehaviorSubject<Boolean> = repository.shimmerSubject
 
     fun refreshCoins(): Completable = repository.refreshCoins()
+
+    private fun provideBroadcastReceiver(job: (Context?, Intent?) -> Unit): BroadcastReceiver {
+        return object : BroadcastReceiver() {
+            override fun onReceive(context: Context?, intent: Intent?) {
+                job(context, intent)
+            }
+        }
+    }
+
+    private fun internetConnection(
+        context: Context,
+        onChangeListener: (Context?, Intent?) -> Unit
+    ): Intent? {
+        return context.registerReceiver(
+            provideBroadcastReceiver(onChangeListener),
+            IntentFilter("android.net.conn.CONNECTIVITY_CHANGE")
+        )
+    }
+
+    fun internetConnected(c: Context, online: () -> Unit) {
+        internetConnection(c) { _, _ ->
+            val net = NetworkChecker(c)
+            if (net.isInternetConnected || net.isWifiConnected)
+                online()
+        }
+    }
 
     fun getAboutDataByName(c: Context, coinName: String): RCoinAbout {
         val file = c.assets
