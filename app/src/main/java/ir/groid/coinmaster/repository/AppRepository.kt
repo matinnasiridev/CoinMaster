@@ -60,7 +60,6 @@ class AppRepository(
                         txtPrice = coin.dISPLAY.uSD.pRICE,
                         txtMarketCap = coin.dISPLAY.uSD.mKTCAP,
                         fullName = coin.coinInfo.fullName,
-
                         open = coin.dISPLAY.uSD.oPEN24HOUR,
                         todayHigh = coin.dISPLAY.uSD.hIGH24HOUR,
                         todayLow = coin.dISPLAY.uSD.lOW24HOUR,
@@ -69,7 +68,6 @@ class AppRepository(
                         totalVolume = coin.dISPLAY.uSD.tOTALVOLUME24H,
                         marketCap = coin.dISPLAY.uSD.mKTCAP,
                         supply = coin.dISPLAY.uSD.sUPPLY
-
                     )
                 )
             }
@@ -87,5 +85,4 @@ class AppRepository(
             }
             .ignoreElement()
     }
-
 }

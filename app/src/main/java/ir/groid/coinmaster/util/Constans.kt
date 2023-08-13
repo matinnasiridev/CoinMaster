@@ -9,7 +9,9 @@ object Constans {
     const val KEYONE = "asdwGE"
     const val KEYTWO = "awdbtb"
 
-    const val TimeOut = 6000
+    const val TimeOut = 6000L
+
+    const val NoInfo = "There is no information"
 
     // Tables:
     const val TableCoin = "table_coin"

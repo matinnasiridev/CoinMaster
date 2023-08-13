@@ -10,6 +10,7 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import io.reactivex.CompletableObserver
 import io.reactivex.disposables.Disposable
+import io.reactivex.functions.Consumer
 import ir.groid.coinmaster.adapter.MarketAdapter
 import ir.groid.coinmaster.databinding.ActivityMarketBinding
 import ir.groid.coinmaster.model.RCoinData
@@ -40,48 +41,56 @@ class MarketActivity : AppCompatActivity(), RecyclerEvent<RCoinData> {
         binding = ActivityMarketBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
-        cAdapter = MarketAdapter(this)
-
-        viewM.internetConnected(this) {
-            showToast("InterNet Connect!")
-        }
-
+        initService()
         initUI()
     }
 
-    private fun initUI() {
+    private fun initService() {
+        cAdapter = MarketAdapter(this)
 
-        swiperRefresh()
-        onMoreClick()
-        fillRv()
-        shimmerManager()
-
-        refreshNews()
-        news()
-
-        refreshCoins()
-        coins()
-    }
-
-    private fun shimmerManager() {
-        cAdapter.refreshActive(true)
-    }
-
-    private fun fillRv() {
-        binding.resMarket.recyclerItemMarket.setAdapter {
-            cAdapter
+        viewM.internetConnected(this) {
+            refresh()
         }
     }
 
-    private fun swiperRefresh() {
+    private fun initUI() {
+        swiper()
+        onMoreClick()
+        fillRv()
+        shimmerManage()
+        refresh()
+
+        // News
+        news()
+
+        // Coins
+        coins()
+    }
+
+    private fun shimmerManage() {
+        viewM.addDis(viewM.shimmerStatus().subscribe {
+            runOnUiThread {
+                cAdapter.refreshActive(!it)
+            }
+        })
+    }
+
+
+    private fun refresh() {
+        refreshCoins()
+        refreshNews()
+    }
+
+    private fun fillRv() = binding.resMarket.recyclerItemMarket.setAdapter {
+        cAdapter
+    }
+
+    private fun swiper() {
         binding.swiper.setOnRefreshListener {
             Handler(Looper.myLooper()!!).postDelayed({
                 binding.swiper.isRefreshing = false
             }, measureTimeMillis {
-                shimmerManager()
-                refreshCoins()
-                refreshNews()
+                refresh()
             })
         }
     }
@@ -121,7 +130,6 @@ class MarketActivity : AppCompatActivity(), RecyclerEvent<RCoinData> {
 
     private val setRandom: (max: Int) -> Int = { (0 until it).random() }
 
-
     private fun bindNews(r: RNewsData) {
         binding.newsMarket.apply {
             txtNews.text = r.txtNews
@@ -131,7 +139,6 @@ class MarketActivity : AppCompatActivity(), RecyclerEvent<RCoinData> {
             }
         }
     }
-
 
     // Coins
     private fun refreshCoins() {
@@ -157,7 +164,6 @@ class MarketActivity : AppCompatActivity(), RecyclerEvent<RCoinData> {
         viewM.getAllCoins().observe(this) {
             if (it.isNotEmpty()) {
                 cAdapter.submit(it)
-                shimmerManager()
                 fillRv()
             }
         }

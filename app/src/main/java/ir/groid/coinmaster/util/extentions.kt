@@ -14,6 +14,7 @@ import io.reactivex.Completable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import ir.groid.coinmaster.util.Constans.NoInfo
 
 
 fun <T : RecyclerView.ViewHolder?> RecyclerView.setAdapter(adapter: () -> RecyclerView.Adapter<T>) {
@@ -41,7 +42,7 @@ fun ImageView.load(url: String) {
 }
 
 fun TextView.lunch(url: String?) {
-    this.text = url
+    if (url?.contains("https://") == true) this.text = url else this.text = NoInfo
     this.setOnClickListener {
         if (!url.isNullOrEmpty() && "https://" in url)
             this.context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))

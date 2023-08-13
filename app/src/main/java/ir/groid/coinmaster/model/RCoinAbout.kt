@@ -1,13 +1,14 @@
 package ir.groid.coinmaster.model
 
 import android.os.Parcelable
+import ir.groid.coinmaster.util.Constans.NoInfo
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class RCoinAbout(
-    var coinWebsite: String? = "There is no information",
-    var coinGithub: String? = "There is no information",
-    var coinTwitter: String? = "There is no information",
-    var coinDes: String? = "There is no information",
-    var coinReddit: String? = "There is no information"
+    var coinWebsite: String? = NoInfo,
+    var coinGithub: String? = NoInfo,
+    var coinTwitter: String? = NoInfo,
+    var coinDes: String? = NoInfo,
+    var coinReddit: String? = NoInfo
 ) : Parcelable
