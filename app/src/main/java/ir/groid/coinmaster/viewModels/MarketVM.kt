@@ -20,7 +20,8 @@ import ir.groid.coinmaster.responce.CoinsAboutData
 import ir.groid.coinmaster.util.NetworkChecker
 
 class MarketVM(
-    private val repository: AppRepository
+    private val repository: AppRepository,
+    private val netStatus: NetworkChecker
 ) : ViewModel() {
     private val dis = CompositeDisposable()
     fun getAllNews(): LiveData<List<RNewsData>> = repository.getAllNews()
@@ -53,8 +54,7 @@ class MarketVM(
 
     fun internetConnected(c: Context, online: () -> Unit) {
         internetConnection(c) { _, _ ->
-            val net = NetworkChecker(c)
-            if (net.isInternetConnected || net.isWifiConnected)
+            if (netStatus.isInternetConnected)
                 online()
         }
     }

@@ -15,12 +15,13 @@ import ir.groid.coinmaster.util.load
 import ir.groid.coinmaster.util.lunch
 import ir.groid.coinmaster.viewModels.CoinDataVM
 import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class CoinDataActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityCoinDataBinding
-    private val viewM: CoinDataVM by inject()
+    private val viewM by viewModel<CoinDataVM>()
     private lateinit var cd: RCoinData
     private lateinit var ca: RCoinAbout
     override fun onCreate(savedInstanceState: Bundle?) {
