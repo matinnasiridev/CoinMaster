@@ -92,8 +92,11 @@ class MarketAdapter(
         notifyDataSetChanged()
     }
 
+    /**
+     * true = Normal View
+     */
     @SuppressLint("NotifyDataSetChanged")
-    fun refreshActive(ch: Boolean) {
+    fun switchToNormalView(ch: Boolean) {
         viewT = ch
         notifyDataSetChanged()
     }

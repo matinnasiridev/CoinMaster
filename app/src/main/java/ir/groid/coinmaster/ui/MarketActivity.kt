@@ -33,6 +33,7 @@ class MarketActivity : AppCompatActivity(), RecyclerEvent<RCoinData> {
     private lateinit var binding: ActivityMarketBinding
     private val viewM by viewModel<MarketVM>()
     private lateinit var cAdapter: MarketAdapter
+    private var isRoomEmpty: Boolean = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,20 +56,17 @@ class MarketActivity : AppCompatActivity(), RecyclerEvent<RCoinData> {
         swiper()
         onMoreClick()
         fillRv()
-        shimmerManage()
         refresh()
-
-        // News
         news()
-
-        // Coins
         coins()
+        shimmerManage()
     }
 
     private fun shimmerManage() {
         viewM.addDis(viewM.shimmerStatus().subscribe {
             runOnUiThread {
-                cAdapter.refreshActive(!it)
+                cAdapter.switchToNormalView(!isRoomEmpty && it)
+                Log.d(TAG, "isRoomEmpty $isRoomEmpty Req $it res ${!isRoomEmpty && it}")
             }
         })
     }
@@ -160,10 +158,12 @@ class MarketActivity : AppCompatActivity(), RecyclerEvent<RCoinData> {
 
     private fun coins() {
         viewM.getAllCoins().observe(this) {
-            if (it.isNotEmpty()) {
+            isRoomEmpty = if (it.isNotEmpty()) {
                 cAdapter.submit(it)
                 fillRv()
-            }
+                false
+            } else
+                true
         }
     }
 

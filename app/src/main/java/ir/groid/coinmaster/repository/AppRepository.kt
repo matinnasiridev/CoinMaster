@@ -74,14 +74,14 @@ class AppRepository(
             list
         }
 
-        shimmerSubject.onNext(true)
+        shimmerSubject.onNext(false)
 
         return apiService
             .getTopCoins()
             .map { changeDataType(it) }
             .doOnSuccess {
                 coinDao.insert(it)
-                shimmerSubject.onNext(false)
+                shimmerSubject.onNext(true)
             }
             .ignoreElement()
     }

@@ -8,9 +8,9 @@ import ir.groid.coinmaster.repository.AppRepository
 class CoinDataVM(private val repository: AppRepository) : ViewModel() {
     private val dis = CompositeDisposable()
 
-
-
-
+    fun getPeriod(id: Int): String {
+        return id.toString()
+    }
 
     fun getDis(d: Disposable) = dis.add(d)
 

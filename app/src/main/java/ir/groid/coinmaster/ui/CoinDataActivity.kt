@@ -1,6 +1,8 @@
 package ir.groid.coinmaster.ui
 
 import android.os.Bundle
+import android.util.Log
+import android.widget.RadioGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import ir.groid.coinmaster.databinding.ActivityCoinDataBinding
@@ -11,10 +13,10 @@ import ir.groid.coinmaster.util.Constans.BASE_URL_TWITT
 import ir.groid.coinmaster.util.Constans.CENTERKEY
 import ir.groid.coinmaster.util.Constans.KEYONE
 import ir.groid.coinmaster.util.Constans.KEYTWO
+import ir.groid.coinmaster.util.Constans.TAG
 import ir.groid.coinmaster.util.load
 import ir.groid.coinmaster.util.lunch
 import ir.groid.coinmaster.viewModels.CoinDataVM
-import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -60,6 +62,10 @@ class CoinDataActivity : AppCompatActivity() {
     private fun chart() {
         binding.layoutChart.apply {
             txtChartPrice.text = cd.txtPrice
+
+            radio.setOnCheckedChangeListener { _, checkedId ->
+                Log.d(TAG,viewM.getPeriod(checkedId))
+            }
         }
     }
 
