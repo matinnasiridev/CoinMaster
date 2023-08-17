@@ -9,6 +9,7 @@ import ir.groid.coinmaster.database.NewsDao
 import ir.groid.coinmaster.model.RCoinData
 import ir.groid.coinmaster.model.RNewsData
 import ir.groid.coinmaster.repository.AppRepository
+import ir.groid.coinmaster.util.AdsSystem
 import ir.groid.coinmaster.util.Constans
 import ir.groid.coinmaster.util.NetworkChecker
 import ir.groid.coinmaster.viewModels.CoinDataVM
@@ -37,6 +38,7 @@ object AppModule {
     val ToolsM = module {
         single { AppRepository(get(), get(), get()) }
         single { NetworkChecker(get()) }
+        single<AppService.AdsService> { AdsSystem(get()) }
     }
 
     val ViewModelM = module {

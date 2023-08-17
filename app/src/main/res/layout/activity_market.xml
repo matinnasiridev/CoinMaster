@@ -42,7 +42,7 @@
                     android:layout_marginTop="6dp"
                     android:layout_marginBottom="8dp"
                     android:text="@string/creator"
-                    android:visibility="invisible" />
+                    android:visibility="visible" />
 
             </LinearLayout>
 
