@@ -39,17 +39,6 @@
         app:layout_constraintTop_toBottomOf="@+id/recyclerItemMarket" />
 
 
-    <com.adivery.sdk.AdiveryNativeAdView
-        android:id="@+id/native_ad_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:adivery_native_ad_layout="@layout/itemnativeadivary"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/view"
-        app:placement_id="42624be1-db43-4264-a218-8a5ab64c70d7" />
-
-
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnMore"
         style="@style/Widget.MaterialComponents.Button.TextButton"
@@ -58,5 +47,5 @@
         android:text="@string/more"
         android:textColor="@color/primaryTextColor"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/native_ad_view" />
+        app:layout_constraintTop_toBottomOf="@+id/view" />
 </androidx.constraintlayout.widget.ConstraintLayout>

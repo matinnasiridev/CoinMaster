@@ -78,7 +78,5 @@ dependencies {
     // Shimmer
     implementation "com.facebook.shimmer:shimmer:0.5.0"
 
-    // Adivery
-    implementation 'com.adivery:sdk:4.6.5'
-    implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.8.21'
+
 }
