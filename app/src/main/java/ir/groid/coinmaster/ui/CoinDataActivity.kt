@@ -6,6 +6,7 @@ import android.widget.RadioGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import ir.groid.coinmaster.databinding.ActivityCoinDataBinding
+import ir.groid.coinmaster.di.AppService
 import ir.groid.coinmaster.model.RCoinAbout
 import ir.groid.coinmaster.model.RCoinData
 import ir.groid.coinmaster.util.Constans.BASE_URL_IMAG
@@ -14,9 +15,9 @@ import ir.groid.coinmaster.util.Constans.CENTERKEY
 import ir.groid.coinmaster.util.Constans.KEYONE
 import ir.groid.coinmaster.util.Constans.KEYTWO
 import ir.groid.coinmaster.util.Constans.TAG
-import ir.groid.coinmaster.util.load
 import ir.groid.coinmaster.util.lunch
 import ir.groid.coinmaster.viewModels.CoinDataVM
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -24,6 +25,7 @@ class CoinDataActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityCoinDataBinding
     private val viewM by viewModel<CoinDataVM>()
+    private val imageLoader by inject<AppService.ImageLoader>()
     private lateinit var cd: RCoinData
     private lateinit var ca: RCoinAbout
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,7 +56,7 @@ class CoinDataActivity : AppCompatActivity() {
             ibT.isVisible = true
             ivT.isVisible = true
             ibT.setOnClickListener { onBackPressed() }
-            ivT.load(BASE_URL_IMAG + cd.img)
+            imageLoader.loader(BASE_URL_IMAG + cd.img, ivT)
             tvT.text = cd.fullName
         }
     }
@@ -64,7 +66,7 @@ class CoinDataActivity : AppCompatActivity() {
             txtChartPrice.text = cd.txtPrice
 
             radio.setOnCheckedChangeListener { _, checkedId ->
-                Log.d(TAG,viewM.getPeriod(checkedId))
+                Log.d(TAG, viewM.getPeriod(checkedId))
             }
         }
     }

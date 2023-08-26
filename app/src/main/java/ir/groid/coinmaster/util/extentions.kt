@@ -30,13 +30,6 @@ fun Completable.thereadHandeler(): Completable {
     return subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
 }
 
-fun ImageView.load(url: String) {
-    Glide
-        .with(this.context)
-        .load(url)
-        .into(this)
-}
-
 fun TextView.lunch(url: String?) {
     if (url?.contains("https://") == true) this.text = url else this.text = NoInfo
     this.setOnClickListener {

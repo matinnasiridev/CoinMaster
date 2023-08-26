@@ -14,11 +14,13 @@ import ir.groid.coinmaster.adapter.MarketAdapter
 import ir.groid.coinmaster.databinding.ActivityMarketBinding
 import ir.groid.coinmaster.model.RCoinData
 import ir.groid.coinmaster.model.RNewsData
+import ir.groid.coinmaster.util.Constans.BtnMore
 import ir.groid.coinmaster.util.Constans.CENTERKEY
 import ir.groid.coinmaster.util.Constans.KEYONE
 import ir.groid.coinmaster.util.Constans.KEYTWO
 import ir.groid.coinmaster.util.Constans.TAG
 import ir.groid.coinmaster.util.RecyclerEvent
+import ir.groid.coinmaster.util.open
 import ir.groid.coinmaster.util.setAdapter
 import ir.groid.coinmaster.util.thereadHandeler
 import ir.groid.coinmaster.viewModels.MarketVM
@@ -90,9 +92,7 @@ class MarketActivity : AppCompatActivity(), RecyclerEvent<RCoinData> {
     }
 
     private fun onMoreClick() {
-        binding.resMarket.btnMore.setOnClickListener {
-
-        }
+        binding.resMarket.btnMore.open(BtnMore)
     }
 
     // News

@@ -9,18 +9,21 @@ import androidx.recyclerview.widget.RecyclerView
 import ir.groid.coinmaster.R
 import ir.groid.coinmaster.databinding.ItemMarketNormalBinding
 import ir.groid.coinmaster.databinding.ItemMarketShimmerBinding
+import ir.groid.coinmaster.di.AppService
 import ir.groid.coinmaster.model.RCoinData
 import ir.groid.coinmaster.util.Constans.BASE_URL_IMAG
 import ir.groid.coinmaster.util.RecyclerEvent
-import ir.groid.coinmaster.util.load
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
 
 class MarketAdapter(
     private val event: RecyclerEvent<RCoinData>
 ) :
-    RecyclerView.Adapter<MarketAdapter.MarketViewHolder>() {
+    RecyclerView.Adapter<MarketAdapter.MarketViewHolder>(), KoinComponent {
     private lateinit var binding: ItemMarketNormalBinding
     private lateinit var binding2: ItemMarketShimmerBinding
+    private val imageLoader by inject<AppService.ImageLoader>()
     private var listCoins: ArrayList<RCoinData> = arrayListOf()
     private var viewT: Boolean = false // true == Normal View
 
@@ -45,7 +48,7 @@ class MarketAdapter(
                     )
                 )
 
-                imgItem.load(BASE_URL_IMAG + data.img!!)
+                imageLoader.loader(BASE_URL_IMAG + data.img, imgItem)
             }
             binding.root.setOnClickListener { event.onClick(data) }
         }

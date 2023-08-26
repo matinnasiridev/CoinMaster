@@ -5,7 +5,11 @@ import io.reactivex.Single
 import ir.groid.coinmaster.responce.ChartData
 import ir.groid.coinmaster.responce.CoinsData
 import ir.groid.coinmaster.responce.NewsData
+import ir.groid.coinmaster.util.Constans
 import ir.groid.coinmaster.util.Constans.API_KEYS
+import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
+import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.Path
@@ -37,5 +41,15 @@ interface ApiService {
         @Query("tsym") toSymbol: String = "USD"
     ): Single<ChartData>
 
+}
 
+fun provideApiService(): ApiService {
+    val rtf = Retrofit
+        .Builder()
+        .baseUrl(Constans.BASE_URL)
+        .addConverterFactory(GsonConverterFactory.create())
+        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+        .build()
+
+    return rtf.create(ApiService::class.java)
 }
