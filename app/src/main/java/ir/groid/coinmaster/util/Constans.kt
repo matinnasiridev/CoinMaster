@@ -3,7 +3,8 @@ package ir.groid.coinmaster.util
 
 object Constans {
 
-    const val BtnMore = "https://www.livecoinwatch.com/"
+    const val RefKEY = "pLsU8zTF"
+    val btnMore:(code:String)-> String = {"https://bitpin.ir/signup/?ref=$it"}
     const val TAG = "awdEFv"
     const val CENTERKEY = "asdwGE"
     const val KEYONE = "asdwGE"

@@ -44,12 +44,11 @@ interface ApiService {
 }
 
 fun provideApiService(): ApiService {
-    val rtf = Retrofit
+    return Retrofit
         .Builder()
         .baseUrl(Constans.BASE_URL)
         .addConverterFactory(GsonConverterFactory.create())
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
         .build()
-
-    return rtf.create(ApiService::class.java)
+        .create(ApiService::class.java)
 }

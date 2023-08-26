@@ -14,11 +14,12 @@ import ir.groid.coinmaster.adapter.MarketAdapter
 import ir.groid.coinmaster.databinding.ActivityMarketBinding
 import ir.groid.coinmaster.model.RCoinData
 import ir.groid.coinmaster.model.RNewsData
-import ir.groid.coinmaster.util.Constans.BtnMore
 import ir.groid.coinmaster.util.Constans.CENTERKEY
 import ir.groid.coinmaster.util.Constans.KEYONE
 import ir.groid.coinmaster.util.Constans.KEYTWO
+import ir.groid.coinmaster.util.Constans.RefKEY
 import ir.groid.coinmaster.util.Constans.TAG
+import ir.groid.coinmaster.util.Constans.btnMore
 import ir.groid.coinmaster.util.RecyclerEvent
 import ir.groid.coinmaster.util.open
 import ir.groid.coinmaster.util.setAdapter
@@ -33,7 +34,6 @@ class MarketActivity : AppCompatActivity(), RecyclerEvent<RCoinData> {
     private lateinit var binding: ActivityMarketBinding
     private val viewM by viewModel<MarketVM>()
     private lateinit var cAdapter: MarketAdapter
-    private var isRoomEmpty: Boolean = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,8 +65,7 @@ class MarketActivity : AppCompatActivity(), RecyclerEvent<RCoinData> {
     private fun shimmerManage() {
         viewM.addDis(viewM.shimmerStatus().subscribe {
             runOnUiThread {
-                cAdapter.switchToNormalView(!isRoomEmpty && it)
-                Log.d(TAG, "isRoomEmpty $isRoomEmpty Req $it res ${!isRoomEmpty && it}")
+                cAdapter.switchToNormalView(it)
             }
         })
     }
@@ -92,7 +91,7 @@ class MarketActivity : AppCompatActivity(), RecyclerEvent<RCoinData> {
     }
 
     private fun onMoreClick() {
-        binding.resMarket.btnMore.open(BtnMore)
+        binding.resMarket.btnMore.open(btnMore(RefKEY))
     }
 
     // News
@@ -158,12 +157,10 @@ class MarketActivity : AppCompatActivity(), RecyclerEvent<RCoinData> {
 
     private fun coins() {
         viewM.getAllCoins().observe(this) {
-            isRoomEmpty = if (it.isNotEmpty()) {
+            if (it.isNotEmpty()) {
                 cAdapter.submit(it)
                 fillRv()
-                false
-            } else
-                true
+            }
         }
     }
 
