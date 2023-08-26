@@ -9,4 +9,12 @@ interface AppService {
     interface ImageLoader {
         fun loader(url: String, view: ImageView)
     }
+
+    interface AdsSystem {
+        fun init()
+    }
+
+    interface NetworkChecker {
+        fun isInternetConnected(): Boolean
+    }
 }

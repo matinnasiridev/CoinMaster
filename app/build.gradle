@@ -79,4 +79,6 @@ dependencies {
     implementation "com.facebook.shimmer:shimmer:0.5.0"
 
 
+    // Tapsell Plus (Ads)
+    implementation("ir.tapsell.plus:tapsell-plus-sdk-android:2.2.0")
 }

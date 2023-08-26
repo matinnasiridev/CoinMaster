@@ -5,6 +5,7 @@ import androidx.room.Room
 import ir.groid.coinmaster.api.provideApiService
 import ir.groid.coinmaster.database.AppDatabase
 import ir.groid.coinmaster.repository.AppRepository
+import ir.groid.coinmaster.util.AdsHandeler
 import ir.groid.coinmaster.util.Constans
 import ir.groid.coinmaster.util.GlideImageLoader
 import ir.groid.coinmaster.util.NetworkChecker
@@ -16,7 +17,6 @@ import org.koin.dsl.module
 
 
 val appModule = module {
-    single { provideApiService() }
 
     single {
         Room.databaseBuilder(
@@ -26,12 +26,17 @@ val appModule = module {
         ).allowMainThreadQueries()
             .build()
     }
-    single { get<AppDatabase>().coinDao }
-    single { get<AppDatabase>().newsDao }
 
+    single {
+        AppRepository(
+            provideApiService(),
+            get<AppDatabase>().coinDao,
+            get<AppDatabase>().newsDao
+        )
+    }
 
-    single { AppRepository(get(), get(), get()) }
-    single { NetworkChecker(get()) }
+    single<AppService.NetworkChecker> { NetworkChecker(get()) }
+    single<AppService.AdsSystem> { AdsHandeler() }
     single<AppService.ImageLoader> { GlideImageLoader() }
 
 
