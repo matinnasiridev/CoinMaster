@@ -1,6 +1,7 @@
 package ir.groid.coinmaster.di
 
 import android.widget.ImageView
+import ir.groid.coinmaster.util.InitCallBack
 
 
 interface AppService {
@@ -11,7 +12,7 @@ interface AppService {
     }
 
     interface AdsSystem {
-        fun init()
+        fun init(key: String, event: InitCallBack)
     }
 
 }

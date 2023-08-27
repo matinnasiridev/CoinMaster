@@ -2,7 +2,6 @@ package ir.groid.coinmaster.adapter
 
 import com.robinhood.spark.SparkAdapter
 import ir.groid.coinmaster.model.RChartData
-import ir.groid.coinmaster.responce.ChartData
 
 class ChartAdapter : SparkAdapter() {
     private var historyData: List<RChartData> = listOf()

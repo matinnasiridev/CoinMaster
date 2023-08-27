@@ -104,7 +104,7 @@ class AppRepository(
             }
             list
         }
-        return apiService.getChartData(config.hisToPer!!, symbol, config.limit!!, config.agg!!)
+        return apiService.getChartData(config.hisToPer, symbol, config.limit!!, config.agg!!)
             .map {
                 changeDataType(it)
             }

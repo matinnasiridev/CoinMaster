@@ -2,13 +2,10 @@ package ir.groid.coinmaster.ui
 
 import android.os.Bundle
 import android.util.Log
-import android.widget.RadioGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
-import io.reactivex.CompletableObserver
 import io.reactivex.SingleObserver
 import io.reactivex.disposables.Disposable
-import io.reactivex.internal.operators.single.SingleObserveOn
 import ir.groid.coinmaster.adapter.ChartAdapter
 import ir.groid.coinmaster.databinding.ActivityCoinDataBinding
 import ir.groid.coinmaster.di.AppService
@@ -22,7 +19,6 @@ import ir.groid.coinmaster.util.Constans.KEYONE
 import ir.groid.coinmaster.util.Constans.KEYTWO
 import ir.groid.coinmaster.util.Constans.TAG
 import ir.groid.coinmaster.util.lunch
-import ir.groid.coinmaster.util.showToast
 import ir.groid.coinmaster.util.thereadHandeler
 import ir.groid.coinmaster.viewModels.CoinDataVM
 import org.koin.android.ext.android.inject
@@ -74,7 +70,9 @@ class CoinDataActivity : AppCompatActivity() {
         binding.layoutChart.apply {
             txtChartPrice.text = cd.txtPrice
             sparkmain.adapter = charAdapter
+
             getPositions { charAdapter.submit(it) }
+
             radio.setOnCheckedChangeListener { _, checkedId ->
                 getPositions(checkedId) { charAdapter.submit(it) }
             }

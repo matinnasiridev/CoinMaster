@@ -5,7 +5,7 @@ import androidx.room.Room
 import ir.groid.coinmaster.api.provideApiService
 import ir.groid.coinmaster.database.AppDatabase
 import ir.groid.coinmaster.repository.AppRepository
-import ir.groid.coinmaster.util.AdsHandeler
+import ir.groid.coinmaster.util.AdsImpl
 import ir.groid.coinmaster.util.Constans
 import ir.groid.coinmaster.util.GlideImageLoader
 import ir.groid.coinmaster.util.NetworkChecker
@@ -36,7 +36,7 @@ val appModule = module {
     }
 
     single { NetworkChecker(get()) }
-    single<AppService.AdsSystem> { AdsHandeler() }
+    single<AppService.AdsSystem> { AdsImpl() }
     single<AppService.ImageLoader> { GlideImageLoader() }
 
 

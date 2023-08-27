@@ -12,6 +12,7 @@ import io.reactivex.CompletableObserver
 import io.reactivex.disposables.Disposable
 import ir.groid.coinmaster.adapter.MarketAdapter
 import ir.groid.coinmaster.databinding.ActivityMarketBinding
+import ir.groid.coinmaster.di.AppService
 import ir.groid.coinmaster.model.RCoinData
 import ir.groid.coinmaster.model.RNewsData
 import ir.groid.coinmaster.util.Constans.CENTERKEY
@@ -25,6 +26,7 @@ import ir.groid.coinmaster.util.open
 import ir.groid.coinmaster.util.setAdapter
 import ir.groid.coinmaster.util.thereadHandeler
 import ir.groid.coinmaster.viewModels.MarketVM
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import kotlin.system.measureTimeMillis
 
@@ -33,6 +35,7 @@ class MarketActivity : AppCompatActivity(), RecyclerEvent<RCoinData> {
 
     private lateinit var binding: ActivityMarketBinding
     private val viewM by viewModel<MarketVM>()
+    private val ads by inject<AppService.AdsSystem>()
     private lateinit var cAdapter: MarketAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,10 +48,10 @@ class MarketActivity : AppCompatActivity(), RecyclerEvent<RCoinData> {
     }
 
     private fun initService() {
-
         cAdapter = MarketAdapter(this)
         viewM.internetConnected(this) {
             refresh()
+            // ads.init()
         }
     }
 
