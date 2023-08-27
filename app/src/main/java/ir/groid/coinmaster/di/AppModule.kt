@@ -35,7 +35,7 @@ val appModule = module {
         )
     }
 
-    single<AppService.NetworkChecker> { NetworkChecker(get()) }
+    single { NetworkChecker(get()) }
     single<AppService.AdsSystem> { AdsHandeler() }
     single<AppService.ImageLoader> { GlideImageLoader() }
 

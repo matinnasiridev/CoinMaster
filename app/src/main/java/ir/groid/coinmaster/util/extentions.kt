@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.android.material.button.MaterialButton
 import io.reactivex.Completable
+import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import ir.groid.coinmaster.util.Constans.NoInfo
@@ -27,6 +28,10 @@ fun <T : RecyclerView.ViewHolder?> RecyclerView.setAdapter(adapter: () -> Recycl
 }
 
 fun Completable.thereadHandeler(): Completable {
+    return subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+}
+
+fun <T> Single<T>.thereadHandeler(): Single<T> {
     return subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
 }
 

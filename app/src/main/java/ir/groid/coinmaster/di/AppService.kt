@@ -14,7 +14,4 @@ interface AppService {
         fun init()
     }
 
-    interface NetworkChecker {
-        fun isInternetConnected(): Boolean
-    }
 }

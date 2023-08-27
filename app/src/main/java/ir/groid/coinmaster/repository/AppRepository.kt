@@ -3,12 +3,16 @@ package ir.groid.coinmaster.repository
 
 import androidx.lifecycle.LiveData
 import io.reactivex.Completable
+import io.reactivex.Single
 import io.reactivex.subjects.BehaviorSubject
 import ir.groid.coinmaster.api.ApiService
 import ir.groid.coinmaster.database.CoinDao
 import ir.groid.coinmaster.database.NewsDao
+import ir.groid.coinmaster.model.ChartParam
+import ir.groid.coinmaster.model.RChartData
 import ir.groid.coinmaster.model.RCoinData
 import ir.groid.coinmaster.model.RNewsData
+import ir.groid.coinmaster.responce.ChartData
 import ir.groid.coinmaster.responce.CoinsData
 import ir.groid.coinmaster.responce.NewsData
 
@@ -84,5 +88,25 @@ class AppRepository(
                 shimmerSubject.onNext(true)
             }
             .ignoreElement()
+    }
+
+    fun getAllChartsPoint(
+        config: ChartParam,
+        symbol: String
+    ): Single<List<RChartData>> {
+
+        val changeDataType: (n: ChartData) -> List<RChartData> = {
+            val list = ArrayList<RChartData>()
+            it.data.forEach { chart ->
+                list.add(
+                    RChartData(chart.close, chart.open)
+                )
+            }
+            list
+        }
+        return apiService.getChartData(config.hisToPer!!, symbol, config.limit!!, config.agg!!)
+            .map {
+                changeDataType(it)
+            }
     }
 }
