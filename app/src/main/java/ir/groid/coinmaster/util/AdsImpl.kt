@@ -17,12 +17,12 @@ import ir.tapsell.plus.model.TapsellPlusErrorModel
 
 class AdsImpl : AppService.AdsSystem {
     private lateinit var acc: Activity
-    override fun init(activity: Activity, key: String, initSuccess: (AdNetworks?) -> Unit) {
+    override fun init(activity: Activity, key: String, initSuccess: () -> Unit) {
         this.acc = activity
         TapsellPlus.initialize(acc, key, object : TapsellPlusInitListener {
             override fun onInitializeSuccess(p0: AdNetworks?) {
                 Log.d(TAP, "Init Success: ${p0?.name}")
-                initSuccess(p0)
+                initSuccess()
             }
 
             override fun onInitializeFailed(p0: AdNetworks?, p1: AdNetworkError?) {

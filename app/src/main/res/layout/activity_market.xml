@@ -29,6 +29,16 @@
                     android:id="@+id/news_market"
                     layout="@layout/module_news" />
 
+                <RelativeLayout
+                    android:id="@+id/standardBanner"
+                    android:layout_width="match_parent"
+                    android:layout_marginBottom="12dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center" />
+
+
                 <include
                     android:id="@+id/res_market"
                     layout="@layout/module_rec" />
@@ -43,13 +53,6 @@
                     android:layout_marginBottom="8dp"
                     android:text="@string/creator"
                     android:visibility="visible" />
-
-                <RelativeLayout
-                    android:id="@+id/standardBanner"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:gravity="center" />
 
             </LinearLayout>
 

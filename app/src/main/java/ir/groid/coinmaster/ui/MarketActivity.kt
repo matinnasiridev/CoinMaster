@@ -10,7 +10,6 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import io.reactivex.CompletableObserver
 import io.reactivex.disposables.Disposable
-import ir.groid.coinmaster.R
 import ir.groid.coinmaster.adapter.MarketAdapter
 import ir.groid.coinmaster.databinding.ActivityMarketBinding
 import ir.groid.coinmaster.di.AppService
@@ -29,7 +28,6 @@ import ir.groid.coinmaster.util.open
 import ir.groid.coinmaster.util.setAdapter
 import ir.groid.coinmaster.util.thereadHandeler
 import ir.groid.coinmaster.viewModels.MarketVM
-import ir.tapsell.plus.TapsellPlusBannerType
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import kotlin.system.measureTimeMillis
@@ -59,12 +57,8 @@ class MarketActivity : AppCompatActivity(), RecyclerEvent<RCoinData> {
         }
 
         ads.init(this, TapsellKEY) {
-            ads.requestStandardBanner(StanderKEY) {
-                ads.showStandardBanner(it, binding.standardBanner)
-            }
+            ads.standardBanner(this, StanderKEY, binding.standardBanner)
         }
-
-
     }
 
     private fun initUI() {

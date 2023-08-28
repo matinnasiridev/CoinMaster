@@ -4,7 +4,6 @@ import android.app.Activity
 import android.view.ViewGroup
 import android.widget.ImageView
 import ir.tapsell.plus.TapsellPlusBannerType
-import ir.tapsell.plus.model.AdNetworks
 
 
 interface AppService {
@@ -15,7 +14,18 @@ interface AppService {
     }
 
     interface AdsSystem {
-        fun init(activity: Activity, key: String, initSuccess: (AdNetworks?) -> Unit)
+
+        fun standardBanner(
+            acc: Activity,
+            keyTwo: String,
+            standardBanner: ViewGroup
+        ) {
+            requestStandardBanner(keyTwo) {
+                showStandardBanner(it, standardBanner)
+            }
+        }
+
+        fun init(activity: Activity, key: String, initSuccess: () -> Unit)
 
         fun requestStandardBanner(
             key: String,
