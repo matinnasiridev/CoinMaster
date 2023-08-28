@@ -1,7 +1,13 @@
 package ir.groid.coinmaster.util
 
 
+
 object Constans {
+
+    // Tapsell
+    const val TAP = "tapsellLogs"
+    const val TapsellKEY = "mgbkglpborkpffssckclmerrakcnpfckosdlklphdqlrajciiigtmnrpbjfbdekhnpgcet"
+    const val StanderKEY = "64ec94928c6dc533d3e52b02"
 
     const val RefKEY = "pLsU8zTF"
     val btnMore:(code:String)-> String = {"https://bitpin.ir/signup/?ref=$it"}

@@ -1,6 +1,7 @@
 package ir.groid.coinmaster.di
 
 
+import android.app.Activity
 import androidx.room.Room
 import ir.groid.coinmaster.api.provideApiService
 import ir.groid.coinmaster.database.AppDatabase
@@ -38,7 +39,6 @@ val appModule = module {
     single { NetworkChecker(get()) }
     single<AppService.AdsSystem> { AdsImpl() }
     single<AppService.ImageLoader> { GlideImageLoader() }
-
 
     viewModel { MarketVM(get(), get()) }
     viewModel { CoinDataVM(get()) }
