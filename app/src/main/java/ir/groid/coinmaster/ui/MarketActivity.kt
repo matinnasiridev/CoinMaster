@@ -37,6 +37,7 @@ import kotlin.system.measureTimeMillis
 
 class MarketActivity : AppCompatActivity(), RecyclerEvent<RCoinData> {
 
+
     private lateinit var binding: ActivityMarketBinding
     private val viewM by viewModel<MarketVM>()
     private val ads by inject<AppService.AdsSystem>()
