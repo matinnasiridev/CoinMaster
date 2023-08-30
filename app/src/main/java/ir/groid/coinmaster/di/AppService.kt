@@ -25,12 +25,13 @@ interface AppService {
             }
         }
 
-        fun init(activity: Activity, key: String, initSuccess: () -> Unit)
+
+        fun init(activity: Activity, key: String, initSuccess: () -> Unit = {})
 
         fun requestStandardBanner(
             key: String,
             type: TapsellPlusBannerType = TapsellPlusBannerType.BANNER_320x50,
-            onResponse: (String?) -> Unit
+            onResponse: (String?) -> Unit = {}
         )
 
         fun showStandardBanner(responseId: String?, standardBanner: ViewGroup)

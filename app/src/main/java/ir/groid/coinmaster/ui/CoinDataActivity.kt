@@ -17,6 +17,7 @@ import ir.groid.coinmaster.util.Constans.BASE_URL_TWITT
 import ir.groid.coinmaster.util.Constans.CENTERKEY
 import ir.groid.coinmaster.util.Constans.KEYONE
 import ir.groid.coinmaster.util.Constans.KEYTWO
+import ir.groid.coinmaster.util.Constans.StanderCKEY
 import ir.groid.coinmaster.util.Constans.TAG
 import ir.groid.coinmaster.util.lunch
 import ir.groid.coinmaster.util.thereadHandeler
@@ -30,6 +31,7 @@ class CoinDataActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCoinDataBinding
     private val viewM by viewModel<CoinDataVM>()
     private val imageLoader by inject<AppService.ImageLoader>()
+    private val ads by inject<AppService.AdsSystem>()
     private val charAdapter = ChartAdapter()
     private lateinit var cd: RCoinData
     private lateinit var ca: RCoinAbout
@@ -39,6 +41,7 @@ class CoinDataActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         getDataFromBundle()
+        adsLoader()
         initUI()
     }
 
@@ -46,6 +49,10 @@ class CoinDataActivity : AppCompatActivity() {
         val get = intent.getBundleExtra(CENTERKEY)!!
         cd = get.getParcelable(KEYONE)!!
         ca = get.getParcelable(KEYTWO)!!
+    }
+
+    private fun adsLoader() {
+        ads.standardBanner(this, StanderCKEY, binding.standardBanner)
     }
 
     private fun initUI() {
@@ -117,5 +124,10 @@ class CoinDataActivity : AppCompatActivity() {
             txtGithub.lunch(ca.coinGithub)
             txtAboutCoin.text = ca.coinDes
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        ads.destroyStandardBanner(StanderCKEY, binding.standardBanner)
     }
 }

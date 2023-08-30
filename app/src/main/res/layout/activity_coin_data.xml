@@ -24,6 +24,15 @@
                 android:id="@+id/layout_chart"
                 layout="@layout/module_chart" />
 
+            <RelativeLayout
+                android:id="@+id/standardBanner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="12dp"
+                android:gravity="center" />
+
             <include
                 android:id="@+id/layout_statistics"
                 layout="@layout/module_statistics" />

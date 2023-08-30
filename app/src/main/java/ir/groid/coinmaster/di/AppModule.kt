@@ -1,7 +1,7 @@
 package ir.groid.coinmaster.di
 
 
-import android.app.Activity
+
 import androidx.room.Room
 import ir.groid.coinmaster.api.provideApiService
 import ir.groid.coinmaster.database.AppDatabase

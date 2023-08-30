@@ -8,6 +8,7 @@ object Constans {
     const val TAP = "tapsellLogs"
     const val TapsellKEY = "mgbkglpborkpffssckclmerrakcnpfckosdlklphdqlrajciiigtmnrpbjfbdekhnpgcet"
     const val StanderKEY = "64ec94928c6dc533d3e52b02"
+    const val StanderCKEY = "64ef78f6b8c2e8295be3217e"
 
     const val RefKEY = "pLsU8zTF"
     val btnMore:(code:String)-> String = {"https://bitpin.ir/signup/?ref=$it"}

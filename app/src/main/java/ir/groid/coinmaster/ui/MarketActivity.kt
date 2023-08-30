@@ -56,9 +56,12 @@ class MarketActivity : AppCompatActivity(), RecyclerEvent<RCoinData> {
             refresh()
         }
 
-        ads.init(this, TapsellKEY) {
-            ads.standardBanner(this, StanderKEY, binding.standardBanner)
-        }
+        ads.init(this, TapsellKEY)
+    }
+
+    override fun onResume() {
+        ads.standardBanner(this, StanderKEY, binding.standardBanner)
+        super.onResume()
     }
 
     private fun initUI() {
