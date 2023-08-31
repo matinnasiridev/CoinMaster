@@ -6,7 +6,7 @@ import android.net.NetworkCapabilities
 import android.os.Build
 import ir.groid.coinmaster.di.AppService
 
-class NetworkChecker(private val context: Context) {
+class NetworkChecker(private val context: Context) : AppService.NetworkChecker {
 
     private val isInternetConnected: Boolean
         get() {
@@ -202,5 +202,5 @@ class NetworkChecker(private val context: Context) {
 
         }
 
-
+    override fun isInternetAW(): Boolean = isInternetConnected
 }

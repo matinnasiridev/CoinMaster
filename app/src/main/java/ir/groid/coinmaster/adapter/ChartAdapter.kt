@@ -1,29 +1,20 @@
 package ir.groid.coinmaster.adapter
 
 import com.robinhood.spark.SparkAdapter
-import ir.groid.coinmaster.model.RChartData
 
 class ChartAdapter : SparkAdapter() {
-    private var historyData: List<RChartData> = listOf()
-    private var baseLine: String? = null
+    private var list: List<Double> = listOf()
 
-    override fun getCount(): Int = historyData.size
+    override fun getCount(): Int = list.size
 
-    override fun getItem(index: Int): RChartData = historyData[index]
+    override fun getItem(index: Int): Double = list[index]
 
     override fun getY(index: Int): Float {
-        return historyData[index].closeP.toFloat()
+        return list[index].toFloat()
     }
 
-    override fun hasBaseLine(): Boolean = true
-
-    override fun getBaseLine(): Float {
-        return baseLine?.toFloat() ?: super.getBaseLine()
-    }
-
-    fun submit(newList: List<RChartData>, newBase: String? = null) {
-        historyData = newList
-        baseLine = newBase
+    fun submit(newList: List<Double>) {
+        list = newList
         notifyDataSetChanged()
     }
 }

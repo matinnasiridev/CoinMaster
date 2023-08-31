@@ -1,7 +1,6 @@
 package ir.groid.coinmaster.util
 
 
-
 object Constans {
 
     // Tapsell
@@ -11,7 +10,7 @@ object Constans {
     const val StanderCKEY = "64ef78f6b8c2e8295be3217e"
 
     const val RefKEY = "pLsU8zTF"
-    val btnMore:(code:String)-> String = {"https://bitpin.ir/signup/?ref=$it"}
+    val btnMore: (code: String) -> String = { "https://bitpin.ir/signup/?ref=$it" }
     const val TAG = "awdEFv"
     const val CENTERKEY = "asdwGE"
     const val KEYONE = "asdwGE"

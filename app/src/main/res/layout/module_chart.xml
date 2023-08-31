@@ -18,27 +18,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
+    <ImageView
         android:id="@+id/txt_chart_updown"
-        style="@style/CoinBitText.Body"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="22dp"
+        android:layout_height="22dp"
         android:layout_marginTop="4dp"
+        android:importantForAccessibility="no"
         android:paddingEnd="4dp"
-        android:textColor="@color/colorGain"
+        android:src="@drawable/ic_tre_dw"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_chart_price" />
+        app:layout_constraintTop_toBottomOf="@+id/txt_chart_price"
+        app:tint="@color/white" />
 
-    <TextView
-        android:id="@+id/txt_chart_changer1"
-        style="@style/CoinBitText.BodyTertiary"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:paddingEnd="4dp"
-        android:text="-$0.04"
-        app:layout_constraintStart_toEndOf="@+id/txt_chart_updown"
-        app:layout_constraintTop_toBottomOf="@+id/txt_chart_price" />
 
     <TextView
         android:id="@+id/txt_chart_change2"
@@ -49,7 +40,7 @@
         android:text="+8.1%"
         android:textColor="@color/colorGain"
         android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/txt_chart_changer1"
+        app:layout_constraintStart_toEndOf="@+id/txt_chart_updown"
         app:layout_constraintTop_toBottomOf="@+id/txt_chart_price" />
 
     <com.robinhood.spark.SparkView
@@ -59,7 +50,7 @@
         android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_chart_changer1"
+        app:layout_constraintTop_toBottomOf="@+id/txt_chart_change2"
         app:spark_animateChanges="true"
         app:spark_lineColor="@color/colorPrimary"
         app:spark_scrubEnabled="true" />

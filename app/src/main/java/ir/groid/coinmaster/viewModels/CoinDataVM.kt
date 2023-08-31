@@ -7,8 +7,8 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import ir.groid.coinmaster.R
 import ir.groid.coinmaster.model.ChartParam
-import ir.groid.coinmaster.model.RChartData
 import ir.groid.coinmaster.repository.AppRepository
+import ir.groid.coinmaster.util.CheckChangeClass
 import ir.groid.coinmaster.util.Constans.ALL
 import ir.groid.coinmaster.util.Constans.HISTO_DAY
 import ir.groid.coinmaster.util.Constans.HISTO_HOUR
@@ -23,7 +23,7 @@ import ir.groid.coinmaster.util.Constans.YEAR
 class CoinDataVM(private val repository: AppRepository) : ViewModel() {
     private val dis = CompositeDisposable()
 
-    private fun getPeriod(id: Int?): String {
+    private fun getPeriod(id: Int? = R.id.radio_12h): String {
         return when (id) {
             R.id.radio_12h -> HOUR
             R.id.radio_1d -> HOURS24
@@ -36,9 +36,9 @@ class CoinDataVM(private val repository: AppRepository) : ViewModel() {
         }
     }
 
-    private fun otherOptionUsePer(id: Int?): ChartParam {
+    private fun otherOptionUsePer(id: Int? = R.id.radio_12h): ChartParam {
         return when (getPeriod(id)) {
-            HOUR -> ChartParam(hisToPer = HISTO_MINUTE, limit = 60, agg = 12)
+            HOUR -> ChartParam(hisToPer = HISTO_MINUTE, limit = 75, agg = 12)
             HOURS24 -> ChartParam(hisToPer = HISTO_HOUR, limit = 24)
             WEEK -> ChartParam(hisToPer = HISTO_HOUR, agg = 6)
             MONTH -> ChartParam(hisToPer = HISTO_DAY, limit = 30)
@@ -50,10 +50,21 @@ class CoinDataVM(private val repository: AppRepository) : ViewModel() {
         }
     }
 
+    fun changeFilter(i: Double?, doJob: (CheckChangeClass) -> Unit) {
+        if (i!! > 0) {
+            doJob(CheckChangeClass.HIGH)
+        } else if (i < 0) {
+            doJob(CheckChangeClass.LOW)
+        } else {
+            doJob(CheckChangeClass.NORMAL)
+        }
+    }
+
+
     fun getChartData(
         symbol: String,
-        id: Int? = null
-    ): Single<List<RChartData>> {
+        id: Int? = R.id.radio_12h
+    ): Single<List<Double>> {
         return repository.getAllChartsPoint(otherOptionUsePer(id), symbol)
     }
 

@@ -13,6 +13,7 @@ import io.reactivex.Completable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import ir.groid.coinmaster.R
 import ir.groid.coinmaster.util.Constans.NoInfo
 
 
@@ -48,3 +49,21 @@ fun MaterialButton.open(url: String?) {
             this.context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
     }
 }
+
+fun setColor(i: Double): Int {
+    return if (i > 0) {
+        R.color.colorGain
+    } else if (i < 0) {
+        R.color.colorLoss
+    } else {
+        R.color.secondaryTextColor
+    }
+}
+
+
+enum class CheckChangeClass {
+    HIGH, LOW, NORMAL
+}
+
+
+val setP: (String?) -> String = { "$it%" }

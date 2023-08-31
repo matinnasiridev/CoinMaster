@@ -13,6 +13,10 @@ interface AppService {
         fun loader(url: String, view: ImageView)
     }
 
+    interface NetworkChecker {
+        fun isInternetAW(): Boolean
+    }
+
     interface AdsSystem {
 
         fun standardBanner(

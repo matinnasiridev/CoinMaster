@@ -9,8 +9,7 @@ class MyApp : Application() {
     override fun onCreate() {
         super.onCreate()
 
-
-        // Di Use Koin v3.4.2
+        // Koin v3.4.2
         startKoin {
             androidContext(this@MyApp)
             modules(
@@ -19,6 +18,5 @@ class MyApp : Application() {
                 )
             )
         }
-
     }
 }

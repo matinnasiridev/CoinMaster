@@ -9,7 +9,6 @@ import ir.groid.coinmaster.api.ApiService
 import ir.groid.coinmaster.database.CoinDao
 import ir.groid.coinmaster.database.NewsDao
 import ir.groid.coinmaster.model.ChartParam
-import ir.groid.coinmaster.model.RChartData
 import ir.groid.coinmaster.model.RCoinData
 import ir.groid.coinmaster.model.RNewsData
 import ir.groid.coinmaster.responce.ChartData
@@ -93,13 +92,14 @@ class AppRepository(
     fun getAllChartsPoint(
         config: ChartParam,
         symbol: String
-    ): Single<List<RChartData>> {
+    ): Single<List<Double>> {
 
-        val changeDataType: (n: ChartData) -> List<RChartData> = {
-            val list = ArrayList<RChartData>()
-            it.data.forEach { chart ->
+        val changeDataType: (n: ChartData) -> List<Double> = { chartData ->
+            val list = ArrayList<Double>()
+
+            chartData.data.forEach { chart ->
                 list.add(
-                    RChartData(chart.close, chart.open)
+                    chart.close
                 )
             }
             list
